@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { getFolderContents } from "../../drivers/backend.driver.js";
 
 import Layout from "../../components/Layout/Layout.js";
-import Main from "../../components/Main/Main.js";
+import FolderContent from "../../components/FolderContent/FolderContent.js";
 
 const Folder = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Folder = () => {
 
   return (
     <Layout title={folder && folder.title}>
-      <Main folder={folder} setReFetch={setReFetch} />
+      <FolderContent folder={folder} setReFetch={setReFetch} />
     </Layout>
   );
 };

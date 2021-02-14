@@ -15,10 +15,6 @@ const Sidebar = () => {
         const { folders, bookmarks } = await getSidebarContent({});
         setFolders(folders);
         setBookmarks(bookmarks);
-        localStorage.setItem(
-          "markmeHomeScreen",
-          JSON.stringify({ folders, bookmarks })
-        );
       } catch (error) {
         console.warn("Error while fetching Sidebar Folders: ", error);
       }

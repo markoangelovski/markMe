@@ -1,10 +1,10 @@
 import Layout from "../components/Layout/Layout.js";
-import Main from "../components/Main/Main.js";
+import HomeContent from "../components/HomeContent/HomeContent.js";
 
 const Home = () => {
   return (
     <Layout>
-      <Main />
+      <HomeContent />
     </Layout>
   );
 };

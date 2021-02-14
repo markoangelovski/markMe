@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+import NavFileDropdown from "../NavFileDropdown/NavFileDropdown";
+import NavEditDropdown from "../NavEditDropdown/NavEditDropdown";
+import NavViewDropdown from "../NavViewDropdown/NavViewDropdown";
+
 const Navbar = () => {
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -36,24 +40,9 @@ const Navbar = () => {
       </div>
       <div className="flex-1 flex items-center justify-between px-6 bg-gray-700">
         <nav className="flex">
-          <a
-            href="#"
-            className="inline-block px-3 py-2 leading-none rounded-lg text-sm font-medium text-white hover:bg-gray-600"
-          >
-            File
-          </a>
-          <a
-            href="#"
-            className="ml-2 inline-block px-3 py-2 leading-none rounded-lg text-sm font-medium text-white hover:bg-gray-600 "
-          >
-            Edit
-          </a>
-          <a
-            href="#"
-            className="ml-2 inline-block px-3 py-2 leading-none rounded-lg text-sm font-medium text-white hover:bg-gray-600 "
-          >
-            View
-          </a>
+          <NavFileDropdown />
+          <NavEditDropdown />
+          <NavViewDropdown />
         </nav>
         <div className="relative w-64">
           <span className="absolute inset-y-0 left-0 flex items-center pl-2">

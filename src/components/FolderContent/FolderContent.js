@@ -6,7 +6,7 @@ import Folder from "../Folder/Folder";
 import Bookmark from "../Bookmark/Bookmark";
 import Footer from "../Footer/Footer";
 
-const Main = ({ folder, setReFetch }) => {
+const FolderContent = ({ folder, setReFetch }) => {
   const router = useRouter();
   const { folderId } = router.query;
 
@@ -64,4 +64,4 @@ const Main = ({ folder, setReFetch }) => {
   );
 };
 
-export default Main;
+export default FolderContent;
