@@ -1,8 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-// process.env.NODE_ENV === "development" && require("dotenv").config();
-require("dotenv").config();
+process.env.NODE_ENV === "development" && require("dotenv").config();
 
 // Client URL import for CORS whielisting
 const config = require("../config");
