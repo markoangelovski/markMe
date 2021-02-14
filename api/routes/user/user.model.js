@@ -4,7 +4,8 @@ const User = new mongoose.Schema(
   {
     username: String,
     password: String,
-    avatar: String
+    avatar: String,
+    role: String
   },
   { timestamps: true }
 );

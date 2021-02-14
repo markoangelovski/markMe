@@ -7,7 +7,8 @@
     "build-next": "next build",
     "start": "next start",
     "export": "next export",
-    "server": "NODE_ENV=development node api/app.js"
+    "server": "NODE_ENV=development node api/app.js",
+    "heroku-postbuild": "node api/jobs/jobs.js"
   },
   "dependencies": {
     "autoprefixer": "^10.2.4",

@@ -25,7 +25,7 @@ const {
 
 // User routes
 router.post("/user/auth", auth, authenticate);
-router.post("/user/register", register);
+router.post("/user/register", auth, register);
 router.post("/user/login", login);
 router.post("/user/logout", auth, logout);
 

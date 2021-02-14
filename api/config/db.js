@@ -14,3 +14,8 @@ mongoose.connect(
       mongoose.connections[0].host.split(".")[0]
     )
 );
+
+exports.disconnectDb = () => {
+  mongoose.connection.close();
+  console.log("Connection to Database closed.");
+};
