@@ -1,0 +1,4 @@
+{
+  "api": "https://markme-api-stg.herokuapp.com",
+  "client": "http://localhost:3000"
+}
