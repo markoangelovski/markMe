@@ -16,7 +16,7 @@ const User = require("../routes/user/user.model.js");
     });
 
     console.log(
-      "Temporary Admin User createt.\nClosing Database connection..."
+      "Temporary Admin User created.\nClosing Database connection..."
     );
     disconnectDb();
   } else {
