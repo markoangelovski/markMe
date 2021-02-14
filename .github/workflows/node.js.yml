@@ -25,6 +25,7 @@ jobs:
       - run: npm ci
       - run: npm run build-next
       - run: npm run export
+      - run: echo markme.angelovski.ga > ./out/CNAME
       - run: touch ./out/.nojekyll
 
       - name: Deploy 🚀
