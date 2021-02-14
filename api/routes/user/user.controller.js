@@ -79,7 +79,8 @@ exports.login = async (req, res, next) => {
       res.cookie("access_token", "Bearer " + token, {
         secure: process.env.NODE_ENV !== "development",
         maxAge: 604800000, // 7 days
-        httpOnly: true
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "development" ? "Lax" : "None"
       });
 
       res.json({
