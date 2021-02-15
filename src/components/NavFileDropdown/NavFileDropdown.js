@@ -14,7 +14,7 @@ const NavFileDropdown = () => {
       </a>
       {visible && (
         <button
-          className="absolute inset-0 h-full w-full cursor-default bg-gray-400 opacity-30"
+          className="absolute inset-0 h-full w-full cursor-default outline-none"
           onClick={() => setVisible(false)}
         ></button>
       )}

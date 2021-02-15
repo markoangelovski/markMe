@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { getFolderContents } from "../../drivers/backend.driver.js";
 
-import Layout from "../../components/Layout/Layout.js";
+import Header from "../../components/Header/Header.js";
 import FolderContent from "../../components/FolderContent/FolderContent.js";
 
 const Folder = () => {
@@ -26,9 +26,10 @@ const Folder = () => {
   }, [folderId, reFetch]);
 
   return (
-    <Layout title={folder && folder.title}>
+    <>
+      <Header>{<title>{folder && folder.title}</title>}</Header>
       <FolderContent folder={folder} setReFetch={setReFetch} />
-    </Layout>
+    </>
   );
 };
 

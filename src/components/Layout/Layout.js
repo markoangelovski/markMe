@@ -6,7 +6,7 @@ import Header from "../Header/Header.js";
 import Navbar from "../Navbar/Navbar.js";
 import Sidebar from "../Sidebar/Sidebar.js";
 
-const Layout = ({ title, children }) => {
+const Layout = ({ children }) => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -31,12 +31,14 @@ const Layout = ({ title, children }) => {
 
   return (
     <>
-      <Header>{title && <title>{title}</title>}</Header>
+      <Header />
       <div className="h-screen flex flex-col">
         <Navbar />
         <div className="flex-1 flex overflow-hidden">
           <Sidebar />
-          {children}
+          <main className="flex-1 flex flex-col bg-gray-200 h-full">
+            {children}
+          </main>
         </div>
       </div>
     </>

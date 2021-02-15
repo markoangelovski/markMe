@@ -1,12 +1,7 @@
-import Layout from "../components/Layout/Layout.js";
 import HomeContent from "../components/HomeContent/HomeContent.js";
 
 const Home = () => {
-  return (
-    <Layout>
-      <HomeContent />
-    </Layout>
-  );
+  return <HomeContent />;
 };
 
 export default Home;

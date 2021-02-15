@@ -39,7 +39,7 @@ const FolderContent = ({ folder, setReFetch }) => {
   };
 
   return (
-    <main className="flex-1 flex flex-col bg-gray-200 h-full">
+    <>
       <div
         className="flex-1 p-3 overflow-x-auto flex flex-col flex-wrap h-full"
         onDragOver={e => handleDragOver(e)}
@@ -60,7 +60,7 @@ const FolderContent = ({ folder, setReFetch }) => {
         folderCount={folder ? folder.folderCount : 0}
         bookmarkCount={folder ? folder.bookmarkCount : 0}
       />
-    </main>
+    </>
   );
 };
 
