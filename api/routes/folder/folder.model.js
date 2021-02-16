@@ -48,16 +48,4 @@ Folder.pre("deleteOne", async function () {
   deleteRecursive(_id, model);
 });
 
-const ViewSidebarFolder = new mongoose.Schema(
-  {
-    user: { type: mongoose.ObjectId, ref: "User", required: true },
-    folders: Array
-  },
-  { timestamps: true }
-);
-
 module.exports = mongoose.model("Folder", Folder);
-module.exports.ViewSidebarFolder = mongoose.model(
-  "ViewSidebarFolder",
-  ViewSidebarFolder
-);

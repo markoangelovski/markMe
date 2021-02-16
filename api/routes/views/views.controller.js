@@ -65,3 +65,23 @@ exports.getFolderContents = async (req, res, next) => {
     next(error);
   }
 };
+
+// desc: Fetch all child folders of a single folder
+// GET /views/contents/:folderId/sub-folders
+exports.getFolderSubFolders = async (req, res, next) => {
+  try {
+    // Fetch all chlidren folders of requested folder
+    const folders = await Folder.find({
+      user: req.userId,
+      parentFolder: req.params.folderId
+    });
+
+    res.json({
+      message: "Sub-folder successfully fetched.",
+      folders
+    });
+  } catch (error) {
+    console.warn("Get Sub-folders error: ", error.message);
+    next(error);
+  }
+};

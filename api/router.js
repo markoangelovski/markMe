@@ -20,8 +20,9 @@ const {
 } = require("./routes/bookmark/bookmark.controller.js");
 const {
   getSidebarFolders,
-  getFolderContents
-} = require("./routes/views/all.view.js");
+  getFolderContents,
+  getFolderSubFolders
+} = require("./routes/views/views.controller.js");
 
 // User routes
 router.post("/user/auth", auth, authenticate);
@@ -42,5 +43,6 @@ router.delete("/bookmark/delete/:bookmarkId", auth, deleteBookmark);
 // Views routes
 router.get("/views/sidebar", auth, getSidebarFolders);
 router.get("/views/contents/:folderId", auth, getFolderContents);
+router.get("/views/contents/:folderId/sub-folders", auth, getFolderSubFolders);
 
 module.exports = router;
