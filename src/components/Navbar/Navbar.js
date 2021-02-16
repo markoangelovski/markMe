@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import NavFileDropdown from "../NavFileDropdown/NavFileDropdown";
 import NavEditDropdown from "../NavEditDropdown/NavEditDropdown";
@@ -18,9 +19,16 @@ const Navbar = () => {
     <header className="flex flex-shrink-0">
       <div className="w-64 flex-shrink-0 px-4 py-3 bg-gray-800">
         <button className="w-full flex items-center">
-          {avatar && (
-            <img className="h-8 w-8 rounded-full object-cover" src={avatar} />
-          )}
+          <Link as={"/"} href={"/"}>
+            <a className="">
+              {avatar && (
+                <img
+                  className="h-8 w-8 rounded-full object-cover"
+                  src={avatar}
+                />
+              )}
+            </a>
+          </Link>
           <span className="ml-4 mr-2 text-sm font-medium text-white">
             {username}
           </span>
@@ -57,7 +65,7 @@ const Navbar = () => {
             type="text"
             name="search"
             placeholder="Search"
-            className="block pl-9 pr-4 py-2 w-full bg-gray-900 rounded-lg text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+            className="block pl-9 pr-4 py-2 w-full bg-gray-900 rounded-sm text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
           />
         </div>
       </div>

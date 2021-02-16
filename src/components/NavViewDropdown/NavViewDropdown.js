@@ -12,7 +12,7 @@ const NavViewDropdown = () => {
       >
         View
       </a>
-      {visible && (
+      {/* {visible && (
         <button
           className="absolute inset-0 h-full w-full cursor-default outline-none"
           onClick={() => setVisible(false)}
@@ -35,7 +35,7 @@ const NavViewDropdown = () => {
         >
           New Bookmark
         </a>
-      </div>
+      </div> */}
     </span>
   );
 };

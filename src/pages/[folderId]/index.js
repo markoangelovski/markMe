@@ -27,7 +27,7 @@ const Folder = () => {
 
   return (
     <>
-      <Header>{<title>{folder && folder.title}</title>}</Header>
+      <Header>{<title>{folder ? folder.title : "Loading..."}</title>}</Header>
       <FolderContent folder={folder} setReFetch={setReFetch} />
     </>
   );
