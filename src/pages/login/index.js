@@ -8,7 +8,8 @@ import { auth, login } from "../../drivers/backend.driver.js";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [check, setCheck] = useState(null);
+  const [responseMsg, setresponseMsg] = useState(null);
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -16,8 +17,10 @@ const Login = () => {
         // If authenticated user visits /login, redirect to homepage
         const res = await auth({});
         if (res.status === 200) Router.replace("/");
+        if (res.status >= 400) setCheck(true);
       } catch (error) {
         console.warn("Auth Error: ", error);
+        setCheck(true);
       }
     })();
   }, []);
@@ -25,7 +28,7 @@ const Login = () => {
   const submit = async e => {
     e.preventDefault();
 
-    setCheck(null);
+    setresponseMsg(null);
     try {
       const res = await login({ auth: { username, password } });
       if (res.status === 200) {
@@ -33,12 +36,16 @@ const Login = () => {
         Router.replace("/");
       }
       if (res.status > 400)
-        setCheck("Username and password combo not found, please try again.");
+        setresponseMsg(
+          "Username and password combo not found, please try again."
+        );
     } catch (error) {
       console.warn("Auth Error: ", error);
-      setCheck("An error occurred, please try again later.");
+      setresponseMsg("An error occurred, please try again later.");
     }
   };
+
+  if (!check) return <div>Loading...</div>;
 
   return (
     <>
@@ -60,9 +67,12 @@ const Login = () => {
         />
         <input type="submit" name="submit" id="submit" value="Submit" />
       </form>
-      {check && <p>{check}</p>}
+      {responseMsg && <p>{check}</p>}
     </>
   );
 };
+
+// Flag for rendering the page with or without global Layout. Used for not rendering Layout on Login
+Login.withLayout = false;
 
 export default Login;

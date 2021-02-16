@@ -27,17 +27,17 @@ const Sidebar = () => {
         Folders
       </h2>
       <div className="mt-3">
-        {folders.map((folder, i) => (
-          <SidebarFolder key={i} folder={folder} />
-        ))}
+        {folders &&
+          folders.map((folder, i) => <SidebarFolder key={i} folder={folder} />)}
       </div>
       <h2 className="mt-10 text-xs font-semibold text-gray-600 uppercase tracking-wide">
         Bookmarks
       </h2>
       <div className="mt-3">
-        {bookmarks.map((bookmark, i) => (
-          <SidebarBookmark key={i} bookmark={bookmark} />
-        ))}
+        {bookmarks &&
+          bookmarks.map((bookmark, i) => (
+            <SidebarBookmark key={i} bookmark={bookmark} />
+          ))}
       </div>
     </nav>
   );

@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
     })();
   }, []);
 
-  if (!userAuthenticated) return null;
+  if (!userAuthenticated) return <div>Loading...</div>;
 
   return (
     <>

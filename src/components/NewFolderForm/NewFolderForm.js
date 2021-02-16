@@ -23,7 +23,7 @@ const NewFolderForm = ({ setShowModal }) => {
       setShowModal(false);
     }
   };
-  console.log("title", title);
+
   return (
     <form
       className="relative flex w-64"

@@ -33,4 +33,7 @@ const Folder = () => {
   );
 };
 
+// Flag for rendering the page with or without global Layout. Used for not rendering Layout on Login
+Folder.withLayout = true;
+
 export default Folder;
