@@ -40,7 +40,8 @@ const Login = () => {
           "Username and password combo not found, please try again."
         );
     } catch (error) {
-      console.warn("Auth Error: ", error);
+      console.warn("Login Error: ", error);
+      setCheck(true);
       setresponseMsg("An error occurred, please try again later.");
     }
   };
@@ -67,7 +68,7 @@ const Login = () => {
         />
         <input type="submit" name="submit" id="submit" value="Submit" />
       </form>
-      {responseMsg && <p>{check}</p>}
+      {check && <p>{responseMsg}</p>}
     </>
   );
 };

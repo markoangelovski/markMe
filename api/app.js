@@ -1,7 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-process.env.NODE_ENV === "development" && require("dotenv").config();
+const dev = process.env.NODE_ENV === "development";
+dev && require("dotenv").config();
 
 // Client URL import for CORS whielisting
 const config = require("../config");
@@ -20,6 +21,7 @@ app.use(
     credentials: true
   })
 );
+if (dev) app.use(require("morgan")("dev"));
 
 const { notFound, serverError } = require("./middlewares/errorHandlers.js");
 
