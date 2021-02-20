@@ -1,18 +1,19 @@
-const scrape = require("metadata-parser");
-
 const { urlRgx } = require("../../../constants/constants.js");
 
 // Model imports
 const Bookmark = require("./bookmark.model.js");
 const Folder = require("../folder/folder.model.js");
 
+// Helper imports
+const { getMeta } = require("./bookmark.helpers.js");
+
 // desc: Create new bookmark
 // POST /bookmark/new
 // payload: JSON body {url: "Boomark url", description: "Bookmark description", parentFolder: "Parent folder _id"}
 exports.newBookmark = async (req, res, next) => {
   try {
-    // Check if the folder with the same name already exists
-    const query = { url: req.body.url };
+    // Check if the folder with the same name already exists in the selected.
+    const query = { url: req.body.url, parentFolder: { $exists: false } };
     if (req.body.parentFolder) query.parentFolder = req.body.parentFolder;
     const bookmarkCount = await Bookmark.countDocuments(query);
 
@@ -30,17 +31,23 @@ exports.newBookmark = async (req, res, next) => {
       });
     }
 
+    res.status(201).json({
+      message: "New bookmark creation queued."
+    });
+
     // Get bookmark metadata
-    scrape(req.body.url).then(meta => {
-      // Create a new bookmark
-      Bookmark.create({
+    getMeta(req.body.url).then(meta => {
+      const payload = {
         url: req.body.url,
         user: req.userId,
         title: req.body.title,
         description: req.body.description,
-        parentFolder: req.body.parentFolder,
-        meta: meta.openGraph
-      }).then(bookmark => {
+        parentFolder: req.body.parentFolder
+      };
+      if (meta) payload.meta = meta;
+
+      // Create a new bookmark
+      Bookmark.create(payload).then(bookmark => {
         // Update the bookmark count of the parent folder
         if (bookmark.parentFolder)
           Bookmark.countDocuments({
@@ -52,10 +59,6 @@ exports.newBookmark = async (req, res, next) => {
             ).then(res => res)
           );
       });
-    });
-
-    res.status(201).json({
-      message: "New bookmark creation queued."
     });
   } catch (error) {
     console.warn("New bookmakr error: ", error.message);

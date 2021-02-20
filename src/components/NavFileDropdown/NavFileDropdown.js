@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-import Modal from "../Modal/Modal";
-import NewFolderForm from "../NewFolderForm/NewFolderForm";
+import Modal from "../Modal/Modal.js";
+import NewFolderForm from "../NewFolderForm/NewFolderForm.js";
+import { FolderIcon } from "../Icons/Icons.js";
 
 const NavFileDropdown = () => {
   const [visible, setVisible] = useState(false);
@@ -37,21 +38,16 @@ const NavFileDropdown = () => {
       >
         <a
           href="#"
-          className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-400"
+          className="flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-400 hover:text-white"
           onClick={e => {
             e.preventDefault();
             setVisible(false);
             setShowModal(true);
           }}
         >
-          New Folder
+          <FolderIcon classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white" />
+          <span className="flex-1 px-4">New Folder</span>
         </a>
-        {/* <a
-          href="#"
-          className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-400"
-        >
-          New Bookmark
-        </a> */}
       </div>
     </span>
   );

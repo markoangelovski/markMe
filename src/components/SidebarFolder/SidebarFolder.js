@@ -20,7 +20,7 @@ const SidebarFolder = ({ folder }) => {
       console.warn("Error fetching Sub-folders: ", error);
     }
   };
-  console.log("folders: ", folders);
+
   return (
     <>
       <FolderItem folder={folder} handleGetSubFolders={handleGetSubFolders} />
