@@ -1,6 +1,10 @@
 import Router from "next/router";
 import { useEffect, useState } from "react";
+
 import { auth } from "../../drivers/backend.driver.js";
+
+import useLocalStorage from "../../hooks/useLocalStorage.js";
+import { GlobalContextProvider } from "../../hooks/GlobalContext.js";
 
 import Header from "../Header/Header.js";
 import ContextMenu from "../ContextMenu/ContextMenu.js";
@@ -11,13 +15,15 @@ import Breadcrumbs from "../Breadcrumbs/Breadcrumbs.js";
 const Layout = ({ children }) => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
+  const { del } = useLocalStorage();
+
   useEffect(() => {
     (async () => {
       try {
         const res = await auth({});
 
         if (res.status >= 400) {
-          localStorage.removeItem("markmeUserDetails");
+          del("markmeUserDetails");
           Router.replace("/login");
         } else {
           setUserAuthenticated(true);
@@ -32,7 +38,7 @@ const Layout = ({ children }) => {
   if (!userAuthenticated) return <div>Loading...</div>;
 
   return (
-    <>
+    <GlobalContextProvider>
       <Header />
       <div className="h-screen flex flex-col">
         <ContextMenu />
@@ -45,7 +51,7 @@ const Layout = ({ children }) => {
           </main>
         </div>
       </div>
-    </>
+    </GlobalContextProvider>
   );
 };
 

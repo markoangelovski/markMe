@@ -10,6 +10,8 @@ const SidebarFolder = ({ folder }) => {
   const handleGetSubFolders = async e => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Fetches subfolders
     try {
       const res = await getFolderContents({
         param: `${folder._id}/sub-folders`
@@ -29,7 +31,7 @@ const SidebarFolder = ({ folder }) => {
 
         <span>
           <FolderItem
-            key={i}
+            key={subFolder._id}
             folder={subFolder}
             handleGetSubFolders={handleGetSubFolders}
           />

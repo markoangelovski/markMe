@@ -1,8 +1,8 @@
+import { useEffect } from "react";
+
 import { BookmarkIcon, Favicon } from "../Icons/Icons";
 
 const Bookmark = ({ bookmark }) => {
-  const meta = bookmark.meta;
-
   return (
     <a
       data-type="bookmark"
@@ -12,8 +12,8 @@ const Bookmark = ({ bookmark }) => {
       target="_blank"
       onClick={e => e.stopPropagation()}
     >
-      {meta && meta.icon ? (
-        <Favicon classList="h-5 w-5" icon={meta.icon} />
+      {bookmark.meta && bookmark.meta.icon ? (
+        <Favicon classList="h-5 w-5" icon={bookmark.meta.icon} />
       ) : (
         <BookmarkIcon classList="h-5 w-5 fill-current text-gray-700" />
       )}

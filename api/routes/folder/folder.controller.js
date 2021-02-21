@@ -7,7 +7,7 @@ const Folder = require("./folder.model.js");
 exports.newFolder = async (req, res, next) => {
   try {
     // Check if the folder with the same name already exists
-    const query = { title: req.body.title };
+    const query = { title: req.body.title, parentFolder: { $exists: false } };
     if (req.body.parentFolder) query.parentFolder = req.body.parentFolder;
     const folderCount = await Folder.countDocuments(query);
 

@@ -7,7 +7,7 @@
     "build-next": "next build",
     "start": "next start",
     "export": "next export",
-    "server": "NODE_ENV=development node api/app.js",
+    "server": "NODE_ENV=development nodemon api/app.js",
     "heroku-postbuild": "node api/jobs/jobs.js",
     "local": "npm run dev & npm run server"
   },

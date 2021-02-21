@@ -1,30 +1,17 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 import { FolderIcon } from "../Icons/Icons";
 
 const Folder = ({ folder }) => {
+  const { get, set } = useLocalStorage();
+
   const handleClick = () => {
-    const crumbs = JSON.parse(localStorage.getItem("crumbs")) || [];
-    localStorage.setItem(
-      "crumbs",
-      JSON.stringify([...crumbs, { _id: folder._id, title: folder.title }])
-    );
+    const crumbs = get("crumbs") || [];
+    set("crumbs", [...crumbs, { _id: folder._id, title: folder.title }]);
   };
-
-  useEffect(() => {
-    const onpopstate = e => {
-      const crumbs = JSON.parse(localStorage.getItem("crumbs")) || [];
-      const restCrumbs = crumbs.slice(0, crumbs.length - 1);
-      localStorage.setItem("crumbs", JSON.stringify(restCrumbs));
-    };
-
-    window.onpopstate = onpopstate;
-
-    return () => {
-      window.removeEventListener("popstate", onpopstate);
-    };
-  }, []);
 
   return (
     <Link href={`/${folder._id}`}>

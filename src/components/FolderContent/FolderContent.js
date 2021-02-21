@@ -1,36 +1,18 @@
-import { useRouter } from "next/router";
-
-import { newBookmark } from "../../drivers/backend.driver.js";
+import { useGlobalState } from "../../hooks/GlobalContext.js";
 
 import Folder from "../Folder/Folder";
 import Bookmark from "../Bookmark/Bookmark";
 import Footer from "../Footer/Footer";
 
-const FolderContent = ({ folder, setReFetch }) => {
-  const router = useRouter();
-  const { folderId } = router.query;
+const FolderContent = ({ folder }) => {
+  const { newBookmarkHook } = useGlobalState();
 
   const handleDrop = async e => {
     e.preventDefault();
 
     // Creates a new Bookmark for a drag and drop URL/link from other tab
     const url = e.dataTransfer.getData("text/uri-list");
-
-    try {
-      await newBookmark({
-        body: {
-          url,
-          parentFolder: folderId
-        }
-      });
-
-      // Wait for a second for the bookmark to be stored in DB before refetching
-      setTimeout(() => {
-        setReFetch(status => !status);
-      }, 1000);
-    } catch (error) {
-      console.warn("Error creating a new bookmark: ", error);
-    }
+    newBookmarkHook(url);
   };
 
   return (
@@ -41,13 +23,13 @@ const FolderContent = ({ folder, setReFetch }) => {
         onDrop={e => handleDrop(e)}
       >
         {folder
-          ? folder.folders.map((folder, i) => (
-              <Folder key={i} folder={folder} />
+          ? folder.folders?.map((folder, i) => (
+              <Folder key={folder._id} folder={folder} />
             ))
           : null}
         {folder
-          ? folder.bookmarks.map((bookmark, i) => (
-              <Bookmark key={i} bookmark={bookmark} />
+          ? folder.bookmarks?.map((bookmark, i) => (
+              <Bookmark key={bookmark._id} bookmark={bookmark} />
             ))
           : null}
       </div>

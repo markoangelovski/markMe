@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+import useLocalStorage from "../../hooks/useLocalStorage.js";
+
 import NavFileDropdown from "../NavFileDropdown/NavFileDropdown";
 import NavEditDropdown from "../NavEditDropdown/NavEditDropdown";
 import NavViewDropdown from "../NavViewDropdown/NavViewDropdown";
@@ -9,8 +11,10 @@ const Navbar = () => {
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
 
+  const { get, set } = useLocalStorage();
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("markmeUserDetails"));
+    const user = get("markmeUserDetails");
     user && setUsername(user.username);
     user && setAvatar(user.avatar);
   }, []);
@@ -23,6 +27,7 @@ const Navbar = () => {
             <a className="">
               {avatar && (
                 <img
+                  onClick={() => set("crumbs", [])}
                   className="h-8 w-8 rounded-full object-cover"
                   src={avatar}
                 />

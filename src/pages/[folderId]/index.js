@@ -1,32 +1,31 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
-import { getFolderContents } from "../../drivers/backend.driver.js";
 
 import Header from "../../components/Header/Header.js";
 import FolderContent from "../../components/FolderContent/FolderContent.js";
+import { useGlobalState } from "../../hooks/GlobalContext.js";
 
 const Folder = () => {
-  const router = useRouter();
-  const { folderId } = router.query;
-  const [folder, setFolder] = useState(null);
-  const [reFetch, setReFetch] = useState(false);
+  const [displayFolder, setDisplayFolder] = useState({});
+  const { folder, addedNewBookmark, addedNewSubFolder } = useGlobalState();
+  // const { addedNewBookmark } = useGlobalState();
+  // const { addedNewSubFolder } = useGlobalState();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = folderId && (await getFolderContents({ param: folderId }));
-        res && setFolder(res.folder);
-      } catch (error) {
-        console.warn("Error fetching folder contents: ", error);
-      }
-    })();
-  }, [folderId, reFetch]);
+    setDisplayFolder(folder); // Sets up the standard folder to be displayed. Happens when we access the folder via GET
+  }, [folder]);
+
+  useEffect(() => {
+    setDisplayFolder(addedNewBookmark); // Sets up the updated folder to be displayed. Happens when a new bookmark is created, re-fetches the folder contents after bookmark creation and displays them.
+  }, [addedNewBookmark]);
+
+  useEffect(() => {
+    setDisplayFolder(addedNewSubFolder); // Sets up the updated folder to be displayed. Happens when a new sub folder is created, re-fetches the folder contents after sub folder creation and displays them.
+  }, [addedNewSubFolder]);
 
   return (
     <>
-      <Header>{<title>{folder ? folder.title : "Loading..."}</title>}</Header>
-      <FolderContent folder={folder} setReFetch={setReFetch} />
+      <Header>{<title>{displayFolder?.title || "Loading..."}</title>}</Header>
+      <FolderContent folder={displayFolder} />
     </>
   );
 };

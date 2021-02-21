@@ -1,11 +1,15 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { newFolder } from "../../drivers/backend.driver";
+import { useGlobalState } from "../../hooks/GlobalContext.js";
+
+// import { newFolder } from "../../drivers/backend.driver";
 
 const NewFolderForm = ({ setShowModal }) => {
   const router = useRouter();
   const { folderId } = router.query;
+
+  const { newFolderHook } = useGlobalState();
 
   const [title, setTitle] = useState("");
 
@@ -16,7 +20,8 @@ const NewFolderForm = ({ setShowModal }) => {
     if (folderId) body.parentFolder = folderId;
 
     if (title.length) {
-      await newFolder({ body });
+      // await newFolder({ body });
+      newFolderHook({ body });
 
       setShowModal(false);
     }

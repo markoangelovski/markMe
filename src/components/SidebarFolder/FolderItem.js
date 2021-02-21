@@ -1,12 +1,22 @@
 import Link from "next/link";
 
+import useLocalStorage from "../../hooks/useLocalStorage.js";
+
 const FolderItem = ({ folder, handleGetSubFolders }) => {
+  const { set } = useLocalStorage();
+
+  const handleBreadcrumbs = () => {
+    // Handles setting the clicked folder as root folder in breadcrumbs section
+    set("crumbs", [{ _id: folder._id, title: folder.title }]);
+  };
+
   return (
     <Link as={`/${folder._id}`} href={"/[folderId]"}>
       <a
         data-type="folder"
         data-id={folder._id}
         className="-mx-3 px-3 py-2 flex items-center text-sm font-medium hover:bg-gray-200"
+        onClick={handleBreadcrumbs}
       >
         <svg
           className="-ml-3 h-6 w-6 stroke-current text-gray-400 hover:text-black"
@@ -31,6 +41,7 @@ const FolderItem = ({ folder, handleGetSubFolders }) => {
             <path d="M39 43.5h4a1 1 0 100-2h-4a1 1 0 100 2zM47 43.5h1a1 1 0 100-2h-1a1 1 0 100 2zM50 45.5H39a1 1 0 100 2h11a1 1 0 100-2z" />
           </svg>
           <span
+            onClick={handleBreadcrumbs}
             data-type="folder"
             data-id={folder._id}
             className="ml-2 text-gray-900"

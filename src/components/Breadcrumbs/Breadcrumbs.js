@@ -7,20 +7,23 @@ import useBradcrumbClick from "../../hooks/useBradcrumbClick.js";
 
 const Breadcrumbs = () => {
   const [crumbs, setCrumbs] = useState([]);
+  const [folderBuffer, setFolderBuffer] = useState("");
+
   const router = useRouter();
   const { folderId } = router.query;
 
   const { get, set } = useLocalStorage();
   const { id } = useBradcrumbClick();
-
+  // console.log("id: ", id);
   useEffect(() => {
     const oldCrumbs = get("crumbs");
     oldCrumbs && oldCrumbs?.length ? setCrumbs(oldCrumbs) : setCrumbs([]);
-    !folderId && localStorage.setItem("crumbs", JSON.stringify([]));
+    !folderId && set("crumbs", []);
+    const last = oldCrumbs.slice(-1);
+    // console.log("oldCrumbs", last);
   }, [folderId, id]);
 
   const handleClick = e => {
-    e.preventDefault();
     const oldCrumbs = get("crumbs");
     // console.log("oldCrumbs: ", oldCrumbs);
     const i = oldCrumbs?.findIndex(crumb => crumb._id === id);
@@ -33,16 +36,32 @@ const Breadcrumbs = () => {
     newCrumbs?.length ? set("crumbs", newCrumbs) : set("crumbs", []);
   };
 
+  useEffect(() => {
+    const onpopstate = e => {
+      const crumbs = get("crumbs") || [];
+      const restCrumbs = crumbs.slice(0, crumbs.length - 1);
+      // setFolderBuffer(crumbs.pop()._id);
+      // console.log("pop: ", crumbs.pop()._id);
+      set("crumbs", restCrumbs);
+      // console.log("folderBuffer: ", folderBuffer);
+    };
+
+    window.onpopstate = onpopstate;
+
+    return () => {
+      window.removeEventListener("popstate", onpopstate);
+    };
+  }, []);
+
   return (
     <div className="flex text-gray-500 text-sm">
-      {crumbs?.map((crumb, i) => (
-        <span key={i}>
-          <Link href={`/${crumb._id}`}>
+      {crumbs?.map(crumb => (
+        <span key={crumb._id}>
+          <Link as={`/${crumb._id}`} href={"/[folderId]"}>
             <a
               data-type="folder"
               data-id={crumb._id}
               className="mx-2"
-              href="#"
               onClick={handleClick}
             >
               {crumb?.title}
