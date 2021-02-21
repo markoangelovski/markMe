@@ -12,7 +12,7 @@ const SidebarFolder = ({ folder }) => {
     e.stopPropagation();
     try {
       const res = await getFolderContents({
-        param: `/${folder._id}/sub-folders`
+        param: `${folder._id}/sub-folders`
       });
 
       res && setFolders(res.folders);

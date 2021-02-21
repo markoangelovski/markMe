@@ -9,7 +9,7 @@ const makeDriver = (method, endpoint, json) => async ({
   let url = backend.api + endpoint;
 
   // Add req.param if exits
-  if (param) url = url + param;
+  if (param) url = url + "/" + param;
 
   const headers = {};
   // Set content type to json for JSON payloads

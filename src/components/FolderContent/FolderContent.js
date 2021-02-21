@@ -33,16 +33,11 @@ const FolderContent = ({ folder, setReFetch }) => {
     }
   };
 
-  const handleDragOver = e => {
-    // Required for drag and drop to function
-    e.preventDefault();
-  };
-
   return (
     <>
       <div
         className="flex-1 p-3 overflow-x-auto flex flex-col flex-wrap h-full"
-        onDragOver={e => handleDragOver(e)}
+        onDragOver={e => e.preventDefault()} // Required for drag and drop to function
         onDrop={e => handleDrop(e)}
       >
         {folder

@@ -26,11 +26,6 @@ const NavFileDropdown = () => {
           onClick={() => setVisible(false)}
         ></button>
       )}
-      {showModal && (
-        <Modal setShowModal={setShowModal}>
-          <NewFolderForm setShowModal={setShowModal} />
-        </Modal>
-      )}
       <div
         className={`absolute w-48 py-2 bg-white rounded-sm shadow-xl ${
           visible ? "block" : "hidden"
@@ -49,6 +44,11 @@ const NavFileDropdown = () => {
           <span className="flex-1 px-4">New Folder</span>
         </a>
       </div>
+      {showModal && (
+        <Modal setShowModal={setShowModal}>
+          <NewFolderForm setShowModal={setShowModal} />
+        </Modal>
+      )}
     </span>
   );
 };

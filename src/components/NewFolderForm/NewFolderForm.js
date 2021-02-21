@@ -12,9 +12,7 @@ const NewFolderForm = ({ setShowModal }) => {
   const handleCreateFolder = async e => {
     e.preventDefault();
 
-    const body = {
-      title
-    };
+    const body = { title };
     if (folderId) body.parentFolder = folderId;
 
     if (title.length) {

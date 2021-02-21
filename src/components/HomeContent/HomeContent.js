@@ -1,26 +1,31 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import useDataUpdates from "../../hooks/useDataUpdates.js";
 
-import { newFolder } from "../../drivers/backend.driver";
+import Folder from "../Folder/Folder.js";
+import Bookmark from "../Bookmark/Bookmark.js";
+import Footer from "../Footer/Footer.js";
 
 const HomeContent = () => {
-  const router = useRouter();
-  const { folder } = router.query;
+  const { folders, bookmarks } = useDataUpdates();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        folder &&
-          (await newFolder({
-            body: { title: folder }
-          }));
-      } catch (error) {
-        console.warn("Error creating new folder: ", error);
-      }
-    })();
-  }, []);
-
-  return <div>{folder}</div>;
+  return (
+    <>
+      <div
+        className="flex-1 p-3 overflow-x-auto flex flex-col flex-wrap h-full"
+        // onDragOver={e => e.preventDefault()} // Required for drag and drop to function
+        // onDrop={e => handleDrop(e)}
+      >
+        {folders
+          ? folders.map((folder, i) => <Folder key={i} folder={folder} />)
+          : null}
+        {bookmarks
+          ? bookmarks.map((bookmark, i) => (
+              <Bookmark key={i} bookmark={bookmark} />
+            ))
+          : null}
+      </div>
+      <Footer folderCount={folders.length} bookmarkCount={bookmarks.length} />
+    </>
+  );
 };
 
 export default HomeContent;

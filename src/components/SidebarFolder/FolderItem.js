@@ -3,7 +3,11 @@ import Link from "next/link";
 const FolderItem = ({ folder, handleGetSubFolders }) => {
   return (
     <Link as={`/${folder._id}`} href={"/[folderId]"}>
-      <a className="-mx-3 px-3 py-2 flex items-center text-sm font-medium hover:bg-gray-200">
+      <a
+        data-type="folder"
+        data-id={folder._id}
+        className="-mx-3 px-3 py-2 flex items-center text-sm font-medium hover:bg-gray-200"
+      >
         <svg
           className="-ml-3 h-6 w-6 stroke-current text-gray-400 hover:text-black"
           viewBox="0 0 24 24"
@@ -26,7 +30,13 @@ const FolderItem = ({ folder, handleGetSubFolders }) => {
             <path d="M34 51.5h21v-14H34v14zm2-12h17v10H36v-10z" />
             <path d="M39 43.5h4a1 1 0 100-2h-4a1 1 0 100 2zM47 43.5h1a1 1 0 100-2h-1a1 1 0 100 2zM50 45.5H39a1 1 0 100 2h11a1 1 0 100-2z" />
           </svg>
-          <span className="ml-2 text-gray-900">{folder.title}</span>
+          <span
+            data-type="folder"
+            data-id={folder._id}
+            className="ml-2 text-gray-900"
+          >
+            {folder.title}
+          </span>
         </span>
       </a>
     </Link>

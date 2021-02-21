@@ -5,6 +5,8 @@ const SidebarBookmark = ({ bookmark }) => {
 
   return (
     <a
+      data-type="bookmark"
+      data-id={bookmark._id}
       href={bookmark.url}
       className="-mx-3 px-3 py-2 flex items-center  text-sm font-medium hover:bg-gray-200"
       target="_blank"
@@ -14,7 +16,11 @@ const SidebarBookmark = ({ bookmark }) => {
       ) : (
         <BookmarkIcon classList="h-5 w-5 flex-shrink-0 fill-current text-gray-700" />
       )}
-      <span className="ml-2 text-gray-900">
+      <span
+        data-type="bookmark"
+        data-id={bookmark._id}
+        className="ml-2 text-gray-900"
+      >
         {bookmark.title || (meta && meta.title) || bookmark.url}
       </span>
     </a>

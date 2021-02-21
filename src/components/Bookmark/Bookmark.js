@@ -5,9 +5,12 @@ const Bookmark = ({ bookmark }) => {
 
   return (
     <a
+      data-type="bookmark"
+      data-id={bookmark._id}
       href={bookmark.url}
       className="flex-shrink-0 flex items-center"
       target="_blank"
+      onClick={e => e.stopPropagation()}
     >
       {meta && meta.icon ? (
         <Favicon classList="h-5 w-5" icon={meta.icon} />

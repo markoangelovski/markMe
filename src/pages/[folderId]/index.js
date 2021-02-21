@@ -9,15 +9,13 @@ import FolderContent from "../../components/FolderContent/FolderContent.js";
 const Folder = () => {
   const router = useRouter();
   const { folderId } = router.query;
-
   const [folder, setFolder] = useState(null);
   const [reFetch, setReFetch] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
-        const res =
-          folderId && (await getFolderContents({ param: `/${folderId}` }));
+        const res = folderId && (await getFolderContents({ param: folderId }));
         res && setFolder(res.folder);
       } catch (error) {
         console.warn("Error fetching folder contents: ", error);

@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+// Model import
+const Bookmark = require("../bookmark/bookmark.model.js");
+
 const Folder = new mongoose.Schema(
   {
     user: { type: mongoose.ObjectId, ref: "User", required: true },
@@ -42,6 +45,9 @@ Folder.pre("deleteOne", async function () {
           folderIds.forEach(folderId => deleteRecursive(folderId, model));
         } else {
           model.deleteMany({ _id: { $in: foldersToDelete } }).then(res => res);
+          Bookmark.deleteMany({
+            parentFolder: { $in: [_id, ...foldersToDelete] }
+          }).then(res => res);
         }
       });
   }

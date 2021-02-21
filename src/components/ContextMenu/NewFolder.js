@@ -1,13 +1,13 @@
 import { FolderIcon } from "../Icons/Icons";
 
-export const NewFolder = ({ id, type }) => {
+const NewFolder = ({ setShowModal }) => {
   return (
     <a
       href="#"
       className="flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-400 hover:text-white"
       onClick={e => {
         e.preventDefault();
-        window.location.search = `id=${id}&type=${type}`;
+        setShowModal(true);
       }}
     >
       <FolderIcon classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white" />
@@ -15,3 +15,5 @@ export const NewFolder = ({ id, type }) => {
     </a>
   );
 };
+
+export default NewFolder;
