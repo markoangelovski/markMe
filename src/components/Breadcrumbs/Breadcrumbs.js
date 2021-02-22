@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
     const oldCrumbs = get("crumbs");
     oldCrumbs && oldCrumbs?.length ? setCrumbs(oldCrumbs) : setCrumbs([]);
     !folderId && set("crumbs", []);
-    const last = oldCrumbs.slice(-1);
+    const last = oldCrumbs?.slice(-1);
     // console.log("oldCrumbs", last);
   }, [folderId, id]);
 
