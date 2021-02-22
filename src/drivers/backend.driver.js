@@ -54,5 +54,5 @@ export const updateBookmark = makeDriver("PATCH", "/bookmark/update", true);
 export const deleteBookmark = makeDriver("DELETE", "/bookmark/delete", false);
 
 // Views management drivers
-export const getSidebarContent = makeDriver("GET", "/views/sidebar", true);
-export const getFolderContents = makeDriver("GET", "/views/contents", true);
+export const getSidebarContent = makeDriver("GET", "/views/sidebar", false);
+export const getFolderContents = makeDriver("GET", "/views/contents", false);

@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 const dev = process.env.NODE_ENV === "development";
 dev && require("dotenv").config();
 
@@ -15,10 +16,12 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
 app.use(
   cors({
     origin: config.client,
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 204
   })
 );
 if (dev) app.use(require("morgan")("dev"));
