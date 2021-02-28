@@ -35,30 +35,21 @@ exports.newBookmark = async (req, res, next) => {
       message: "New bookmark creation queued."
     });
 
-    // Get bookmark metadata
-    getMeta(req.body.url).then(meta => {
-      const payload = {
-        url: req.body.url,
-        user: req.userId,
-        title: req.body.title,
-        description: req.body.description,
-        parentFolder: req.body.parentFolder
-      };
-      if (meta) payload.meta = meta;
-
-      // Create a new bookmark
-      Bookmark.create(payload).then(bookmark => {
-        // Update the bookmark count of the parent folder
-        if (bookmark.parentFolder)
-          Bookmark.countDocuments({
-            parentFolder: bookmark.parentFolder
-          }).then(bookmarkCount =>
-            Folder.updateOne(
-              { _id: bookmark.parentFolder },
-              { $set: { bookmarkCount } }
-            ).then(res => res)
-          );
-      });
+    // Create a new bookmark
+    Bookmark.create({
+      user: req.userId,
+      ...req.body
+    }).then(bookmark => {
+      // Update the bookmark count of the parent folder
+      if (bookmark.parentFolder)
+        Bookmark.countDocuments({
+          parentFolder: bookmark.parentFolder
+        }).then(bookmarkCount =>
+          Folder.updateOne(
+            { _id: bookmark.parentFolder },
+            { $set: { bookmarkCount } }
+          ).then(res => res)
+        );
     });
   } catch (error) {
     console.warn("New bookmakr error: ", error.message);

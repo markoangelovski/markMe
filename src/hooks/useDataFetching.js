@@ -5,7 +5,8 @@ import {
   getSidebarContent,
   getFolderContents,
   newBookmark,
-  newFolder
+  newFolder,
+  getBookmarkMetadata
 } from "../drivers/backend.driver.js";
 
 export const useGetSidebarContent = () => {
@@ -49,22 +50,17 @@ export const useGetFolderContents = () => {
 
 export const useNewBookmark = () => {
   const [addedNewBookmark, setUpdatedFolder] = useState({});
+  const [showNewBookmarkModal, setShowNewBookmarkModal] = useState(false);
 
   const router = useRouter();
   const { folderId } = router.query;
 
-  const newBookmarkHook = async url => {
+  const newBookmarkHook = async body => {
     try {
-      url?.length &&
-        (await newBookmark({
-          body: {
-            url,
-            parentFolder: folderId
-          }
-        }));
+      const res = body.url?.length && (await newBookmark({ body }));
 
       // Wait for a second for the bookmark to be stored in DB before refetching
-      url?.length &&
+      res.message &&
         setTimeout(async () => {
           const res =
             folderId && (await getFolderContents({ param: folderId }));
@@ -75,10 +71,15 @@ export const useNewBookmark = () => {
     }
   };
 
-  return { addedNewBookmark, newBookmarkHook };
+  return {
+    addedNewBookmark,
+    newBookmarkHook,
+    showNewBookmarkModal,
+    setShowNewBookmarkModal
+  };
 };
 
-export const useNewSubFolder = () => {
+export const useNewFolder = () => {
   const [addedNewSubFolder, setAddedNewSubFolder] = useState({});
   const [addedNewSidebarFolder, setAddedNewSidebarFolder] = useState([]);
 
@@ -106,4 +107,21 @@ export const useNewSubFolder = () => {
   };
 
   return { addedNewSubFolder, addedNewSidebarFolder, newFolderHook };
+};
+
+export const useGetBookmarkMetadata = () => {
+  const [metadata, setMetadata] = useState({});
+
+  const getMetadataHook = async url => {
+    try {
+      const res =
+        url?.length && (await getBookmarkMetadata({ query: { url } }));
+
+      res && setMetadata(res);
+    } catch (error) {
+      console.warn("Error creating a new bookmark: ", error);
+    }
+  };
+
+  return { metadata, getMetadataHook };
 };

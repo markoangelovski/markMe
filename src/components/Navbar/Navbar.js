@@ -13,6 +13,16 @@ const Navbar = () => {
 
   const { get, set } = useLocalStorage();
 
+  const formatUsername = username => {
+    let first = username?.split("@")[0];
+    first = first?.charAt(0).toUpperCase() + first?.slice(1);
+
+    let second = username?.split("@")[1]?.split(".")[0];
+    second = second?.charAt(0).toUpperCase() + second?.slice(1);
+
+    return first + " " + second;
+  };
+
   useEffect(() => {
     const user = get("markmeUserDetails");
     user && setUsername(user.username);
@@ -35,7 +45,7 @@ const Navbar = () => {
             </a>
           </Link>
           <span className="ml-4 mr-2 text-sm font-medium text-white">
-            {username}
+            {formatUsername(username)}
           </span>
           <svg
             className="ml-auto h-6 w-6 stroke-current text-gray-400"

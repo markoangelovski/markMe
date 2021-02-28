@@ -3,13 +3,17 @@ import * as backend from "../../config";
 const makeDriver = (method, endpoint, json) => async ({
   param,
   auth,
-  body
+  body,
+  query
 }) => {
   // Set main backend API endpoint
   let url = backend.api + endpoint;
 
   // Add req.param if exits
   if (param) url = url + "/" + param;
+
+  // Add req.query if exits
+  if (query) url = url + "?" + new URLSearchParams(query);
 
   const headers = {};
   // Set content type to json for JSON payloads
@@ -56,3 +60,4 @@ export const deleteBookmark = makeDriver("DELETE", "/bookmark/delete", false);
 // Views management drivers
 export const getSidebarContent = makeDriver("GET", "/views/sidebar", false);
 export const getFolderContents = makeDriver("GET", "/views/contents", false);
+export const getBookmarkMetadata = makeDriver("GET", "/views/meta", false);

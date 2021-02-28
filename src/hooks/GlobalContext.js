@@ -4,7 +4,8 @@ import {
   useGetSidebarContent,
   useGetFolderContents,
   useNewBookmark,
-  useNewSubFolder
+  useNewFolder,
+  useGetBookmarkMetadata
 } from "./useDataFetching";
 
 const GlobalStateContext = createContext();
@@ -16,12 +17,18 @@ export const useGlobalState = () => {
 export const GlobalContextProvider = ({ children }) => {
   const { folders, bookmarks } = useGetSidebarContent();
   const { folder } = useGetFolderContents();
-  const { addedNewBookmark, newBookmarkHook } = useNewBookmark();
+  const {
+    addedNewBookmark,
+    newBookmarkHook,
+    showNewBookmarkModal,
+    setShowNewBookmarkModal
+  } = useNewBookmark();
   const {
     addedNewSubFolder,
     addedNewSidebarFolder,
     newFolderHook
-  } = useNewSubFolder();
+  } = useNewFolder();
+  const { metadata, getMetadataHook } = useGetBookmarkMetadata();
 
   return (
     <GlobalStateContext.Provider
@@ -31,9 +38,13 @@ export const GlobalContextProvider = ({ children }) => {
         folder,
         addedNewBookmark,
         newBookmarkHook,
+        showNewBookmarkModal,
+        setShowNewBookmarkModal,
         addedNewSubFolder,
         addedNewSidebarFolder,
-        newFolderHook
+        newFolderHook,
+        metadata,
+        getMetadataHook
       }}
     >
       {children}

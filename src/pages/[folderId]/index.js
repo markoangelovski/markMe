@@ -7,8 +7,6 @@ import { useGlobalState } from "../../hooks/GlobalContext.js";
 const Folder = () => {
   const [displayFolder, setDisplayFolder] = useState({});
   const { folder, addedNewBookmark, addedNewSubFolder } = useGlobalState();
-  // const { addedNewBookmark } = useGlobalState();
-  // const { addedNewSubFolder } = useGlobalState();
 
   useEffect(() => {
     setDisplayFolder(folder); // Sets up the standard folder to be displayed. Happens when we access the folder via GET

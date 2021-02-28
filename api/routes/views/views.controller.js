@@ -2,6 +2,10 @@
 const Folder = require("../folder/folder.model.js");
 const Bookmark = require("../bookmark/bookmark.model.js");
 
+// Helper imports
+const { getMeta } = require("../bookmark/bookmark.helpers.js");
+const { urlRgx } = require("../../../constants/constants.js");
+
 // desc: Fetch all folders and bookmarks for Sidebar (folders and bookmarks without Parent Folder)
 // GET /views/sidebar
 exports.getSidebarFolders = async (req, res, next) => {
@@ -82,6 +86,32 @@ exports.getFolderSubFolders = async (req, res, next) => {
     });
   } catch (error) {
     console.warn("Get Sub-folders error: ", error.message);
+    next(error);
+  }
+};
+
+// desc: Fetchs metadata for a bookmark preview while creating a new bookmark.
+// GET /views/meta?url=https://www.website.com
+exports.getBookmarkMetadata = async (req, res, next) => {
+  try {
+    if (!urlRgx.test(req.query.url)) {
+      res.status(422);
+      return next({
+        message: `Invalid URL format.`
+      });
+    }
+
+    // Fetch Bookmark's metadata
+    const meta = await getMeta(req.query.url);
+    if (meta.keywords) delete meta.keywords;
+
+    res.json({
+      message: "Metadata successfully fetched.",
+      url: req.query.url,
+      meta
+    });
+  } catch (error) {
+    console.warn("Get Bookmark Metadata error: ", error.message);
     next(error);
   }
 };

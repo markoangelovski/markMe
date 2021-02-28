@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { BookmarkIcon, Favicon } from "../Icons/Icons";
 
 const Bookmark = ({ bookmark }) => {

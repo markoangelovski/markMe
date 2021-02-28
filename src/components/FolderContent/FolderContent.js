@@ -5,14 +5,18 @@ import Bookmark from "../Bookmark/Bookmark";
 import Footer from "../Footer/Footer";
 
 const FolderContent = ({ folder }) => {
-  const { newBookmarkHook } = useGlobalState();
+  const { setShowNewBookmarkModal, getMetadataHook } = useGlobalState();
 
   const handleDrop = async e => {
     e.preventDefault();
 
-    // Creates a new Bookmark for a drag and drop URL/link from other tab
     const url = e.dataTransfer.getData("text/uri-list");
-    newBookmarkHook(url);
+
+    // Displays the New Bookmark modal and form
+    setShowNewBookmarkModal(true);
+
+    // Fetches the metadata for a drag and dropped URL/link from other tab
+    await getMetadataHook(url);
   };
 
   return (
