@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const { disconnectDb } = require("../config/db.js");
 require("../config/db.js");
