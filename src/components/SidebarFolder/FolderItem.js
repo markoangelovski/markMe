@@ -22,11 +22,11 @@ const FolderItem = ({
       <a
         data-type="folder"
         data-id={folder._id}
-        className="-mx-3 px-3 py-2 flex text-sm font-medium hover:bg-gray-200"
+        className="-mx-3 px-3 py-2 flex text-sm font-medium whitespace-pre hover:bg-gray-200"
         onClick={handleBreadcrumbs}
       >
         <svg
-          className="-ml-3 h-6 w-6 stroke-current text-gray-400 hover:text-black"
+          className="-ml-3 h-6 w-6 flex-shrink-0 stroke-current text-gray-400 hover:text-black"
           viewBox="0 0 24 24"
           fill="none"
           onClick={e => {
@@ -52,7 +52,7 @@ const FolderItem = ({
             onClick={handleBreadcrumbs}
             data-type="folder"
             data-id={folder._id}
-            className="ml-2 text-gray-900"
+            className="mx-2 text-gray-900"
           >
             {folder.title}
           </span>

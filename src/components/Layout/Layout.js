@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
         <Navbar />
         <div className="flex-1 flex overflow-hidden">
           <Sidebar />
-          <main className="flex-1 flex flex-col bg-gray-200 h-full">
+          <main className="flex-1 flex flex-col bg-gray-200 h-full overflow-hidden">
             <Breadcrumbs />
             {children}
           </main>
