@@ -22,7 +22,12 @@ const Folder = ({ folder }) => {
         className="flex-shrink-0 flex items-center"
         draggable="true"
       >
-        <FolderIcon classList="inline h-5 w-5 fill-current text-gray-700" />
+        <FolderIcon
+          classList="inline h-5 w-5 fill-current text-gray-700"
+          folderCount={folder.folderCount}
+          bookmarkCount={folder.bookmarkCount}
+          showSubFolders={false}
+        />
         <span
           data-type="folder"
           data-id={folder._id}
