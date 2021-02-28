@@ -35,17 +35,17 @@ const Navbar = () => {
         <button className="w-full flex items-center">
           <Link as={"/"} href={"/"}>
             <a className="">
-              {avatar && (
+              {avatar ? (
                 <img
                   onClick={() => set("crumbs", [])}
                   className="h-8 w-8 rounded-full object-cover"
                   src={avatar}
                 />
-              )}
+              ) : null}
             </a>
           </Link>
           <span className="ml-4 mr-2 text-sm font-medium text-white">
-            {formatUsername(username)}
+            {username.length ? formatUsername(username) : null}
           </span>
           <svg
             className="ml-auto h-6 w-6 stroke-current text-gray-400"
