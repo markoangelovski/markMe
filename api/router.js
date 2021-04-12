@@ -24,6 +24,10 @@ const {
   getFolderSubFolders,
   getBookmarkMetadata
 } = require("./routes/views/views.controller.js");
+const {
+  getSearchData,
+  getSuggestionData
+} = require("./routes/search/search.controller.js");
 
 // User routes
 router.post("/user/auth", auth, authenticate);
@@ -46,5 +50,9 @@ router.get("/views/sidebar", auth, getSidebarFolders);
 router.get("/views/contents/:folderId", auth, getFolderContents);
 router.get("/views/contents/:folderId/sub-folders", auth, getFolderSubFolders);
 router.get("/views/meta", auth, getBookmarkMetadata);
+
+// Search routes
+router.get("/search/content", auth, getSearchData);
+router.get("/search/suggestion", auth, getSuggestionData);
 
 module.exports = router;

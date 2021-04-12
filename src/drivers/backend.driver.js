@@ -61,3 +61,11 @@ export const deleteBookmark = makeDriver("DELETE", "/bookmark/delete", false);
 export const getSidebarContent = makeDriver("GET", "/views/sidebar", false);
 export const getFolderContents = makeDriver("GET", "/views/contents", false);
 export const getBookmarkMetadata = makeDriver("GET", "/views/meta", false);
+
+// Search management drivers
+export const getSearchContent = makeDriver("GET", "/search/content", false);
+export const getSearchSuggestions = makeDriver(
+  "GET",
+  "/search/suggestion",
+  false
+);

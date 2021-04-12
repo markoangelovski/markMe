@@ -112,9 +112,17 @@ exports.updateBookmark = (req, res, next) => {
 // DELETE /boomark/delete/:bookmarkId
 exports.deleteBookmark = (req, res, next) => {
   try {
-    Bookmark.deleteOne({ _id: req.params.bookmarkId, user: req.userId }).then(
-      res => res
-    );
+    Bookmark.findOneAndDelete({
+      _id: req.params.bookmarkId,
+      user: req.userId
+    }).then(bookmark => {
+      // Update bookmark count of the parent folder
+      if (bookmark?.parentFolder)
+        Folder.updateOne(
+          { _id: bookmark.parentFolder },
+          { $inc: { bookmarkCount: -1 } }
+        ).then(folder => folder);
+    });
 
     res.json({
       message: "Bookmark delete queued."
