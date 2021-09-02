@@ -8,6 +8,7 @@ const Folder = new mongoose.Schema(
     user: { type: mongoose.ObjectId, ref: "User", required: true },
     title: String,
     description: String,
+    slug: String,
     parentFolder: {
       type: mongoose.ObjectId,
       ref: "Folder"

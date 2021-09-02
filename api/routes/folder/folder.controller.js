@@ -23,6 +23,7 @@ exports.newFolder = async (req, res, next) => {
       user: req.userId,
       title: req.body.title,
       description: req.body.description,
+      slug: req.body.title.split(" ").join("-").toLowerCase(),
       parentFolder: req.body.parentFolder,
       folderCount: 0,
       bookmarkCount: 0
