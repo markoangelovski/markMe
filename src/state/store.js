@@ -36,9 +36,9 @@ export default createStore({
     res.status > 201 && actions.setError(res);
   }),
   fetchActiveFolder: thunk(async (actions, path) => {
-    const res = await getFolderContents({ query: { path } });
-    res.status === 200 && actions.setFolder(res.folder);
-    res.status > 201 && actions.setError(res);
+    const res = path && (await getFolderContents({ query: { path } }));
+    res?.status === 200 && actions.setFolder(res.folder);
+    res?.status > 201 && actions.setError(res);
   }),
   createNewFolder: thunk(async (actions, { body }, { getStoreState }) => {
     const res = await newFolder({ body });
