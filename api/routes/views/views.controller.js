@@ -15,11 +15,11 @@ exports.getSidebarFolders = async (req, res, next) => {
       Folder.find({
         user: req.userId,
         parentFolder: { $exists: false }
-      }),
+      }).select("-user -__v"),
       Bookmark.find({
         user: req.userId,
         parentFolder: { $exists: false }
-      })
+      }).select("-user -__v")
     ]);
 
     res.json({
@@ -33,6 +33,43 @@ exports.getSidebarFolders = async (req, res, next) => {
   }
 };
 
+// desc: Fetch all child folders and bookmars of a single folder by folderPath
+// GET /views/contents?path=folderPath
+exports.getFolderContentsByPath = async (req, res, next) => {
+  try {
+    // Fetch requested folder
+
+    const folder = await Folder.findOne({
+      path: decodeURIComponent(req.query.path),
+      user: req.userId
+    }).select("-user -__v");
+
+    // Fetch chlidren folders and bookmarks of the requested folder
+    const [folders, bookmarks] = await Promise.all([
+      Folder.find({
+        user: req.userId,
+        parentFolder: folder._id
+      }).select("-user -__v"),
+      Bookmark.find({
+        user: req.userId,
+        parentFolder: folder._id
+      }).select("-user -__v")
+    ]);
+
+    res.json({
+      message: "Folder contents successfully fetched.",
+      folder: {
+        ...folder._doc,
+        folders,
+        bookmarks
+      }
+    });
+  } catch (error) {
+    console.warn("Get Folder contents error: ", error.message);
+    next(error);
+  }
+};
+
 // desc: Fetch all child folders and bookmars of a single folder
 // GET /views/contents/:folderId
 exports.getFolderContents = async (req, res, next) => {
@@ -42,15 +79,15 @@ exports.getFolderContents = async (req, res, next) => {
       Folder.findOne({
         _id: req.params.folderId,
         user: req.userId
-      }),
+      }).select("-user -__v"),
       Folder.find({
         user: req.userId,
         parentFolder: req.params.folderId
-      }),
+      }).select("-user -__v"),
       Bookmark.find({
         user: req.userId,
         parentFolder: req.params.folderId
-      })
+      }).select("-user -__v")
     ]);
 
     // Destructuring found folder returned extra junk from mongoose. Parse.stringify returns only the folder object.
@@ -78,7 +115,7 @@ exports.getFolderSubFolders = async (req, res, next) => {
     const folders = await Folder.find({
       user: req.userId,
       parentFolder: req.params.folderId
-    });
+    }).select("-user -__v");
 
     res.json({
       message: "Sub-folder successfully fetched.",

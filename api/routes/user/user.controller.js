@@ -7,7 +7,7 @@ const User = require("./user.model.js");
 // desc: Check if user is authenticated
 // POST /user/auth
 exports.authenticate = async (req, res, next) => {
-  res.json({ message: "User authenticated." });
+  res.json({ message: "User authenticated.", user: req.user });
 };
 
 // desc: Register user

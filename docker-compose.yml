@@ -8,22 +8,23 @@ services:
       - "3001:3001"
     volumes:
       - ./package.json:/markme/package.json
+      - ./.env:/markme/.env
       - ./api:/markme/api
       - ./src:/markme/src
-  #   depends_on:
-  #     - mongo
-  # mongo:
-  #   image: mongo
-  #   ports:
-  #     - "27017:27017"
-  #   volumes:
-  #     - mongo-data:/data/db
-  # mongo-express:
-  #   image: mongo-express
-  #   ports:
-  #     - "8081:8081"
-  #   depends_on:
-  #     - mongo
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
 volumes:
   mongo-data:
     driver: local

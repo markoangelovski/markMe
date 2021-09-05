@@ -1,16 +1,20 @@
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { StoreProvider } from "easy-peasy";
 
 import { auth } from "../../drivers/backend.driver.js";
 
 import useLocalStorage from "../../hooks/useLocalStorage.js";
-import { GlobalContextProvider } from "../../hooks/GlobalContext.js";
+
+import store from "../../state/store.js";
 
 import Header from "../Header/Header.js";
 import ContextMenu from "../ContextMenu/ContextMenu.js";
 import Navbar from "../Navbar/Navbar.js";
 import Sidebar from "../Sidebar/Sidebar.js";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs.js";
+
+import Alerts from "../Alerts/Alerts.js";
 
 const Layout = ({ children }) => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
@@ -38,7 +42,7 @@ const Layout = ({ children }) => {
   if (!userAuthenticated) return <div>Loading...</div>;
 
   return (
-    <GlobalContextProvider>
+    <StoreProvider store={store}>
       <Header />
       <div className="h-screen flex flex-col">
         <ContextMenu />
@@ -51,7 +55,8 @@ const Layout = ({ children }) => {
           </main>
         </div>
       </div>
-    </GlobalContextProvider>
+      <Alerts />
+    </StoreProvider>
   );
 };
 

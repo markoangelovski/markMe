@@ -1,10 +1,17 @@
+import { useEffect } from "react";
+import { useStoreState, useStoreActions } from "easy-peasy";
+
 import SidebarFolder from "../SidebarFolder/SidebarFolder.js";
 import SidebarBookmark from "../SidebarBookmark/SidebarBookmark.js";
 
-import { useGlobalState } from "../../hooks/GlobalContext.js";
-
 const Sidebar = () => {
-  const { folders, bookmarks } = useGlobalState();
+  const { sidebar } = useStoreState(state => state);
+  const { fetchSidebarContent } = useStoreActions(actions => actions);
+
+  useEffect(() => {
+    // Fetch Sidebar contents
+    fetchSidebarContent();
+  }, []);
 
   return (
     <nav className="w-64 p-6 bg-gray-100 overflow-y-auto">
@@ -12,7 +19,7 @@ const Sidebar = () => {
         Folders
       </h2>
       <div className="mt-3">
-        {folders?.map(folder => (
+        {sidebar?.folders?.map(folder => (
           <SidebarFolder key={folder._id} folder={folder} />
         ))}
       </div>
@@ -20,7 +27,7 @@ const Sidebar = () => {
         Bookmarks
       </h2>
       <div className="mt-3">
-        {bookmarks?.map(bookmark => (
+        {sidebar?.bookmarks?.map(bookmark => (
           <SidebarBookmark key={bookmark._id} bookmark={bookmark} />
         ))}
       </div>

@@ -10,7 +10,10 @@ const NewFolder = ({ setShowModal }) => {
         setShowModal(true);
       }}
     >
-      <FolderIcon classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white" />
+      <FolderIcon
+        classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white"
+        showSubFolders={true}
+      />
       <span className="flex-1 px-4">New Folder</span>
     </a>
   );

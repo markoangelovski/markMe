@@ -18,7 +18,7 @@ const FolderItem = ({
   };
 
   return (
-    <Link as={`/${folder._id}`} href={"/[folderId]"}>
+    <Link href={`/#${folder.path}`}>
       <a
         data-type="folder"
         data-id={folder._id}

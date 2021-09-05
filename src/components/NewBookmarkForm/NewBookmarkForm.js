@@ -1,15 +1,11 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
-
-import { useGlobalState } from "../../hooks/GlobalContext.js";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 import { BookmarkIcon, Favicon } from "../Icons/Icons.js";
 
 const NewBookmarkForm = ({ setShowModal }) => {
-  const router = useRouter();
-  const { folderId } = router.query;
-
-  const { newBookmarkHook, metadata } = useGlobalState();
+  const { folder, metadata } = useStoreState(state => state);
+  const { createNewBookmark } = useStoreActions(actions => actions);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -17,41 +13,40 @@ const NewBookmarkForm = ({ setShowModal }) => {
   const handleCreateBookmark = async e => {
     e.preventDefault();
 
-    const body = { url: metadata.url, meta: metadata.meta };
-    if (folderId) body.parentFolder = folderId;
+    const body = { url: metadata.url, meta: metadata };
+    if (folder._id) body.parentFolder = folder._id;
     if (title.length) body.title = title;
     if (description.length) body.description = description;
 
     if (metadata.url.length) {
-      newBookmarkHook(body);
+      createNewBookmark(body);
 
       setShowModal(false);
     }
   };
 
   return (
-    <div className="flex flex-col w-1/2">
+    <div className="flex flex-col w-1/2" onClick={e => e.stopPropagation()}>
       <div className="flex mb-6 bg-white">
         <img
           className="h-40 w-52 object-cover"
-          src={metadata.meta?.image || "/placeholder.png"}
-          alt={metadata.meta?.title}
-          title={metadata.meta?.title}
+          src={metadata?.image || "/placeholder.png"}
+          alt={metadata?.title}
+          title={metadata?.title}
           onError={e => (e.target.src = "/placeholder.png")}
         />
         <div className="flex flex-col p-3">
           <span className="mb-1">
-            <Favicon classList="h-5 w-5 inline" icon={metadata.meta?.icon} />
+            <Favicon classList="h-5 w-5 inline" icon={metadata?.icon} />
             <h2 className="ml-2 font-semibold inline">
-              {metadata.meta?.title || metadata.url}
+              {metadata?.title || metadata.url}
             </h2>
           </span>
-          <p>{metadata.meta?.description} </p>
+          <p>{metadata?.description} </p>
         </div>
       </div>
       <form
         className="flex flex-col p-3 bg-white"
-        onClick={e => e.stopPropagation()}
         onSubmit={e => handleCreateBookmark(e)}
       >
         <div className="mb-2 flex">
@@ -59,7 +54,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
           <div className="ml-2 w-full">
             <input
               onInput={e =>
-                e.target.value.length < 50 && setTitle(e.target.value)
+                e.target.value.length < 250 && setTitle(e.target.value)
               }
               value={title}
               type="text"

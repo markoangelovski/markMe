@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 
@@ -14,7 +13,7 @@ const Folder = ({ folder }) => {
   };
 
   return (
-    <Link href={`/${folder._id}`}>
+    <Link href={`/#${folder.path}`}>
       <a
         onClick={handleClick}
         data-type="folder"

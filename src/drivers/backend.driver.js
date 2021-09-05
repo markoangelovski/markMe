@@ -1,46 +1,43 @@
 import * as backend from "../../config";
 
-const makeDriver = (method, endpoint, json) => async ({
-  param,
-  auth,
-  body,
-  query
-}) => {
-  // Set main backend API endpoint
-  let url = backend.api + endpoint;
+const makeDriver =
+  (method, endpoint, json) =>
+  async ({ param, auth, body, query }) => {
+    // Set main backend API endpoint
+    let url = backend.api + endpoint;
 
-  // Add req.param if exits
-  if (param) url = url + "/" + param;
+    // Add req.param if exits
+    if (param) url = url + "/" + param;
 
-  // Add req.query if exits
-  if (query) url = url + "?" + new URLSearchParams(query);
+    // Add req.query if exits
+    if (query) url = url + "?" + new URLSearchParams(query);
 
-  const headers = {};
-  // Set content type to json for JSON payloads
-  if (json) headers["Content-Type"] = "application/json";
+    const headers = {};
+    // Set content type to json for JSON payloads
+    if (json) headers["Content-Type"] = "application/json";
 
-  // Set Authorization header for login
-  if (auth)
-    headers["Authorization"] = btoa(`${auth.username}:${auth.password}`);
+    // Set Authorization header for login
+    if (auth)
+      headers["Authorization"] = btoa(`${auth.username}:${auth.password}`);
 
-  const options = {
-    method,
-    headers,
-    credentials: "include"
+    const options = {
+      method,
+      headers,
+      credentials: "include"
+    };
+
+    // Set request body
+    if (body) options.body = JSON.stringify(body);
+
+    let status;
+
+    const res = await fetch(url, options).then(res => {
+      status = res.status;
+      return res.json();
+    });
+
+    return { status, ...res };
   };
-
-  // Set request body
-  if (body) options.body = JSON.stringify(body);
-
-  let status;
-
-  const res = await fetch(url, options).then(res => {
-    status = res.status;
-    return res.json();
-  });
-
-  return { status, ...res };
-};
 
 // User auth drivers
 export const auth = makeDriver("POST", "/user/auth", false);

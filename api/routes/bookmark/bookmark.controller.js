@@ -31,25 +31,29 @@ exports.newBookmark = async (req, res, next) => {
       });
     }
 
-    res.status(201).json({
-      message: "New bookmark creation queued."
-    });
-
     // Create a new bookmark
-    Bookmark.create({
+    const bookmark = await Bookmark.create({
       user: req.userId,
       ...req.body
-    }).then(bookmark => {
-      // Update the bookmark count of the parent folder
-      if (bookmark.parentFolder)
-        Bookmark.countDocuments({
-          parentFolder: bookmark.parentFolder
-        }).then(bookmarkCount =>
-          Folder.updateOne(
-            { _id: bookmark.parentFolder },
-            { $set: { bookmarkCount } }
-          ).then(res => res)
-        );
+    });
+
+    // Update the bookmark count of the parent folder
+    if (bookmark.parentFolder)
+      Bookmark.countDocuments({
+        parentFolder: bookmark.parentFolder
+      }).then(bookmarkCount =>
+        Folder.updateOne(
+          { _id: bookmark.parentFolder },
+          { $set: { bookmarkCount } }
+        ).then(res => res)
+      );
+
+    delete bookmark._doc.user;
+    delete bookmark._doc.__v;
+
+    res.status(201).json({
+      message: "New bookmark creation queued.",
+      bookmark: bookmark._doc
     });
   } catch (error) {
     console.warn("New bookmakr error: ", error.message);

@@ -35,7 +35,7 @@ const Navbar = () => {
     <header className="flex flex-shrink-0">
       <div className="w-64 flex-shrink-0 px-4 py-3 bg-gray-800">
         <button className="w-full flex items-center">
-          <Link as={"/"} href={"/"}>
+          <Link as={"/#/"} href={"/#/"}>
             <a className="">
               {avatar ? (
                 <img

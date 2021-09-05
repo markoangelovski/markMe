@@ -9,12 +9,13 @@ const Folder = new mongoose.Schema(
     title: String,
     description: String,
     slug: String,
+    path: String,
     parentFolder: {
       type: mongoose.ObjectId,
       ref: "Folder"
     },
-    folderCount: Number,
-    bookmarkCount: Number
+    folderCount: { type: Number, default: 0 },
+    bookmarkCount: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

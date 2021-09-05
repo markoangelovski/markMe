@@ -21,6 +21,7 @@ const {
 const {
   getSidebarFolders,
   getFolderContents,
+  getFolderContentsByPath,
   getFolderSubFolders,
   getBookmarkMetadata
 } = require("./routes/views/views.controller.js");
@@ -47,6 +48,7 @@ router.delete("/bookmark/delete/:bookmarkId", auth, deleteBookmark);
 
 // Views routes
 router.get("/views/sidebar", auth, getSidebarFolders);
+router.get("/views/contents", auth, getFolderContentsByPath);
 router.get("/views/contents/:folderId", auth, getFolderContents);
 router.get("/views/contents/:folderId/sub-folders", auth, getFolderSubFolders);
 router.get("/views/meta", auth, getBookmarkMetadata);

@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-
-import { useGlobalState } from "../../hooks/GlobalContext.js";
-
-// import { newFolder } from "../../drivers/backend.driver";
+import { useStoreActions } from "easy-peasy";
 
 const NewFolderForm = ({ setShowModal }) => {
   const router = useRouter();
-  const { folderId } = router.query;
+  const folderPath = router.asPath.split("#")[1];
 
-  const { newFolderHook } = useGlobalState();
+  const { createNewFolder } = useStoreActions(actions => actions);
 
   const [title, setTitle] = useState("");
 
@@ -17,11 +14,10 @@ const NewFolderForm = ({ setShowModal }) => {
     e.preventDefault();
 
     const body = { title };
-    if (folderId) body.parentFolder = folderId;
+    if (folderPath.length > 1) body.parentFolderPath = folderPath;
 
     if (title.length) {
-      // await newFolder({ body });
-      newFolderHook({ body });
+      createNewFolder({ body });
 
       setShowModal(false);
     }
@@ -41,10 +37,11 @@ const NewFolderForm = ({ setShowModal }) => {
         </svg>
       </span>
       <input
-        onInput={e => e.target.value.length < 50 && setTitle(e.target.value)}
+        onInput={e => e.target.value.length && setTitle(e.target.value)}
         type="text"
         name="search"
         placeholder="New Folder"
+        autoFocus
         className="block pl-9 pr-4 py-2 w-full bg-gray-900 rounded-sm text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
       />
       <input

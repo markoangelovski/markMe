@@ -3,45 +3,81 @@ const Folder = require("./folder.model.js");
 
 // desc: Create new folder
 // POST /folder/new
-// payload: JSON body {title: "Folder title", description: "Folder description", parentFolder: "Parent folder _id"}
+// payload: JSON body {title: "Folder title", description: "Folder description", parentFolderPath: "/parent-folder-path"}
 exports.newFolder = async (req, res, next) => {
+  let { title, description, parentFolderPath } = req.body;
+
+  // Folder paths with special characters are automatically URL encoded on frontend, and need to be manually decoded on backend
+  parentFolderPath = decodeURIComponent(parentFolderPath);
+
   try {
+    const slug = title
+      .split(" ")
+      .join("-")
+      .toLowerCase()
+      .replace("#", "")
+      .replace("/", "");
+
+    const path = parentFolderPath ? parentFolderPath + "/" + slug : "/" + slug;
+
     // Check if the folder with the same name already exists
-    const query = { title: req.body.title, parentFolder: { $exists: false } };
-    if (req.body.parentFolder) query.parentFolder = req.body.parentFolder;
+    const query = {
+      title,
+      path,
+      user: req.userId
+    };
+
     const folderCount = await Folder.countDocuments(query);
 
     if (folderCount) {
       res.status(422);
       return next({
-        message: `Folder with the title '${req.body.title}' already existis. Please select a different title.`
+        message: `Folder with the title '${title}' already existis. Please select a different title.`
       });
     }
 
+    const folderData = {
+      title,
+      description,
+      slug,
+      path
+    };
+
+    // Get Parent Folder's _id
+    folderData.parentFolder =
+      parentFolderPath &&
+      (
+        await Folder.findOne({
+          path: parentFolderPath
+        }).select("_id")
+      )._id;
+
     // Create a new folder
-    Folder.create({
+    const folder = await Folder.create({
       user: req.userId,
-      title: req.body.title,
-      description: req.body.description,
-      slug: req.body.title.split(" ").join("-").toLowerCase(),
-      parentFolder: req.body.parentFolder,
-      folderCount: 0,
-      bookmarkCount: 0
-    }).then(folder => {
-      // Update the folder count of the parent folder
-      if (folder.parentFolder)
-        Folder.countDocuments({
-          parentFolder: folder.parentFolder
-        }).then(folderCount =>
-          Folder.updateOne(
-            { _id: folder.parentFolder },
-            { $set: { folderCount } }
-          ).then(res => res)
-        );
+      ...folderData
     });
 
+    if (parentFolderPath) {
+      // Update Parent Folder's folder count
+      const folderCount = await Folder.countDocuments({
+        parentFolder: folderData.parentFolder,
+        user: req.userId
+      });
+
+      await Folder.updateOne(
+        { _id: folderData.parentFolder },
+        { $set: { folderCount } }
+      );
+    }
+
+    // Removes user and __v fields before returning the response
+    delete folder._doc.user;
+    delete folder._doc.__v;
+
     res.status(201).json({
-      message: "New folder creation queued."
+      message: "New folder created.",
+      folder: folder._doc
     });
   } catch (error) {
     console.warn("New folder error: ", error.message);
@@ -106,6 +142,78 @@ exports.deleteFolder = async (req, res, next) => {
     });
   } catch (error) {
     console.warn("Delete folder error: ", error.message);
+    next(error);
+  }
+};
+
+// desc: Endpoint used to add the correct "path" property to folders. Left here just in case it is ever needed.
+exports.pathify = async (req, res, next) => {
+  try {
+    // // Adds default path: "/{{slug}}" to root folders
+    // const bulk = Folder.collection.initializeUnorderedBulkOp();
+    // const rootFolders = await Folder.find({ parentFolder: { $exists: false } });
+
+    // rootFolders.forEach(folder => {
+    //   bulk
+    //     .find({ _id: folder._id })
+    //     .update({ $set: { path: "/" + folder.slug } });
+    // });
+
+    // const result = bulk.execute();
+    // res.json(result);
+
+    const rootFolders = await Folder.find({ parentFolder: { $exists: false } });
+
+    const bulk = Folder.collection.initializeUnorderedBulkOp();
+    console.log("Root Folders fetched: ", rootFolders.length);
+
+    const result = [];
+
+    const makePaths = async (parentFolderId, parentFolderPath) => {
+      let pathPlaceholder = "";
+
+      const subFolders = await Folder.find({ parentFolder: parentFolderId });
+
+      // subFolders.forEach(async subFolder => {
+      for (let i = 0; i < subFolders.length; i++) {
+        const subFolder = subFolders[i];
+
+        pathPlaceholder += parentFolderPath + "/" + subFolder.slug;
+
+        bulk.find({ _id: subFolder._id }).update({
+          $set: { path: pathPlaceholder }
+        });
+
+        result.push({
+          title: subFolder.title,
+          path: pathPlaceholder
+        });
+
+        if (subFolders.length) {
+          await makePaths(subFolder._id, pathPlaceholder);
+          pathPlaceholder = "";
+        } else {
+          return;
+        }
+      }
+    };
+
+    for (let i = 0; i < rootFolders.length; i++) {
+      const rootFolder = rootFolders[i];
+      bulk.find({ _id: rootFolder._id }).update({
+        $set: { path: rootFolder.path }
+      });
+      result.push({
+        title: rootFolder.title,
+        path: rootFolder.path
+      });
+      await makePaths(rootFolder._id, rootFolder.path);
+    }
+    const bulres = await bulk.execute();
+    res.json({ bulres, result });
+    // // res.json({ result });
+  } catch (error) {
+    console.warn("Error in pathify: ", error.message);
     next(error);
   }
 };

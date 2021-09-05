@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 import NewFolder from "./NewFolder.js";
 import Delete from "./Delete.js";
@@ -8,16 +9,18 @@ import NewFolderForm from "../NewFolderForm/NewFolderForm.js";
 import NewBookmarkForm from "../NewBookmarkForm/NewBookmarkForm.js";
 
 import useContextMenu from "../../hooks/useContextMenu.js";
-import { useGlobalState } from "../../hooks/GlobalContext.js";
 
 const ContextMenu = () => {
   const [showNewFolderModal, setShowNewFolderModal] = useState(false);
 
   const { showCtxMenu, coords, id, type, text } = useContextMenu();
-  const { showNewBookmarkModal, setShowNewBookmarkModal } = useGlobalState();
+
+  const { showNewBookmarkModal } = useStoreState(state => state);
+  const { setShowNewBookmarkModal } = useStoreActions(actions => actions);
 
   return (
     <>
+      {/* Context/Right click menu */}
       <div
         className={`absolute w-48 py-2 bg-white rounded-sm shadow-xl ${
           showCtxMenu ? "block" : "hidden"
@@ -30,11 +33,15 @@ const ContextMenu = () => {
         {!id && <NewFolder setShowModal={setShowNewFolderModal} />}
         {id && <Delete id={id} type={type} text={text} />}
       </div>
+
+      {/* New folder modal */}
       {showNewFolderModal && (
         <Modal setShowModal={setShowNewFolderModal}>
           <NewFolderForm setShowModal={setShowNewFolderModal} />
         </Modal>
       )}
+
+      {/* New bookmark modal */}
       {showNewBookmarkModal && (
         <Modal setShowModal={setShowNewBookmarkModal}>
           <NewBookmarkForm setShowModal={setShowNewBookmarkModal} />

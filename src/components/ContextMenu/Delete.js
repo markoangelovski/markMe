@@ -28,7 +28,10 @@ const Delete = ({ id, type, text }) => {
       onClick={handleDeleteFolder}
     >
       {type === "folder" ? (
-        <FolderIcon classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white" />
+        <FolderIcon
+          classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white"
+          showSubFolders={true}
+        />
       ) : (
         <BookmarkIcon classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white" />
       )}

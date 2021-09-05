@@ -1,11 +1,23 @@
-import { useGlobalState } from "../../hooks/GlobalContext.js";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
+import Header from "../Header/Header";
 import Folder from "../Folder/Folder";
 import Bookmark from "../Bookmark/Bookmark";
 import Footer from "../Footer/Footer";
 
-const FolderContent = ({ folder }) => {
-  const { setShowNewBookmarkModal, getMetadataHook } = useGlobalState();
+const FolderContent = () => {
+  const { folder } = useStoreState(state => state);
+  const { fetchActiveFolder, fetchBookmarkMetadata, setShowNewBookmarkModal } =
+    useStoreActions(actions => actions);
+
+  const router = useRouter();
+  const folderPath = router.asPath.split("#")[1];
+
+  useEffect(() => {
+    fetchActiveFolder(folderPath);
+  }, [folderPath]);
 
   const handleDrop = async e => {
     e.preventDefault();
@@ -16,11 +28,12 @@ const FolderContent = ({ folder }) => {
     setShowNewBookmarkModal(true);
 
     // Fetches the metadata for a drag and dropped URL/link from other tab
-    await getMetadataHook(url);
+    fetchBookmarkMetadata(url);
   };
 
   return (
     <>
+      <Header>{<title>{folder.title || "Loading..."}</title>}</Header>
       <div
         className="flex-1 p-3 overflow-x-auto flex flex-col flex-wrap h-full"
         onDragOver={e => e.preventDefault()} // Required for drag and drop to function
@@ -28,7 +41,7 @@ const FolderContent = ({ folder }) => {
       >
         {folder
           ? folder.folders?.map((folder, i) => (
-              <Folder key={folder._id} folder={folder} />
+              <Folder key={folder.path} folder={folder} />
             ))
           : null}
         {folder
