@@ -69,6 +69,7 @@ exports.getSuggestionData = async (req, res, next) => {
         _id: 1,
         title: 1,
         description: 1,
+        path: 1,
         meta: {
           title: 1,
           url: 1

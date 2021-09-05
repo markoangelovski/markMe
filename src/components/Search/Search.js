@@ -65,7 +65,7 @@ const Search = () => {
       >
         {suggestedFolders.map((suggestedFolder, i) => (
           <li key={i}>
-            <Link as={`/${suggestedFolder._id}`} href={"/[folderId]"}>
+            <Link href={`/#${suggestedFolder.path}`}>
               <a
                 className="flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-400 hover:text-white"
                 onClick={clear}
