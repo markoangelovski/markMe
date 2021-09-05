@@ -8,7 +8,7 @@ exports.newFolder = async (req, res, next) => {
   let { title, description, parentFolderPath } = req.body;
 
   // Folder paths with special characters are automatically URL encoded on frontend, and need to be manually decoded on backend
-  parentFolderPath = decodeURIComponent(parentFolderPath);
+  parentFolderPath = parentFolderPath && decodeURIComponent(parentFolderPath);
 
   try {
     const slug = title
@@ -44,12 +44,9 @@ exports.newFolder = async (req, res, next) => {
     };
 
     // Get Parent Folder's _id
-    folderData.parentFolder =
-      parentFolderPath &&
-      (
-        await Folder.findOne({
-          path: parentFolderPath
-        }).select("_id")
+    if (parentFolderPath)
+      folderData.parentFolder = (
+        await Folder.findOne({ path: parentFolderPath }).select("_id")
       )._id;
 
     // Create a new folder
