@@ -8,6 +8,7 @@ const Folder = new mongoose.Schema(
     user: { type: mongoose.ObjectId, ref: "User", required: true },
     title: String,
     description: String,
+    favorite: Boolean,
     slug: String,
     path: String,
     parentFolder: {
@@ -15,7 +16,8 @@ const Folder = new mongoose.Schema(
       ref: "Folder"
     },
     folderCount: { type: Number, default: 0 },
-    bookmarkCount: { type: Number, default: 0 }
+    bookmarkCount: { type: Number, default: 0 },
+    hitCount: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

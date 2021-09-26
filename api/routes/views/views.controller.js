@@ -38,7 +38,6 @@ exports.getSidebarFolders = async (req, res, next) => {
 exports.getFolderContentsByPath = async (req, res, next) => {
   try {
     // Fetch requested folder
-
     const folder = await Folder.findOne({
       path: decodeURIComponent(req.query.path),
       user: req.userId
@@ -64,12 +63,18 @@ exports.getFolderContentsByPath = async (req, res, next) => {
         bookmarks
       }
     });
+
+    // TODO: Add the "Most viewed" functionality to fetch folders with the greatest view count.
+    // Folder.updateOne({ _id: folder._id }, { $inc: { hitCount: 1 } }).then(
+    //   res => res
+    // );
   } catch (error) {
     console.warn("Get Folder contents error: ", error.message);
     next(error);
   }
 };
 
+// DEPRECATED
 // desc: Fetch all child folders and bookmars of a single folder
 // GET /views/contents/:folderId
 exports.getFolderContents = async (req, res, next) => {

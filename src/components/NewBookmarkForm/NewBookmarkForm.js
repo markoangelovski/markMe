@@ -37,7 +37,10 @@ const NewBookmarkForm = ({ setShowModal }) => {
         />
         <div className="flex flex-col p-3">
           <span className="mb-1">
-            <Favicon classList="h-5 w-5 inline" icon={metadata?.icon} />
+            <Favicon
+              classList="h-5 w-5 inline"
+              icon={metadata?.icon64 || metadata?.icon}
+            />
             <h2 className="ml-2 font-semibold inline">
               {metadata?.title || metadata.url}
             </h2>

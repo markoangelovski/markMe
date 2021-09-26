@@ -10,8 +10,12 @@ const Bookmark = ({ bookmark }) => {
       target="_blank"
       onClick={e => e.stopPropagation()}
     >
-      {bookmark.meta && bookmark.meta.icon ? (
-        <Favicon classList="h-5 w-5" icon={bookmark.meta.icon} />
+      {(bookmark.meta && bookmark.meta.icon64) ||
+      (bookmark.meta && bookmark.meta.icon) ? (
+        <Favicon
+          classList="h-5 w-5"
+          icon={bookmark.meta.icon64 || bookmark.meta.icon}
+        />
       ) : (
         <BookmarkIcon classList="h-5 w-5 fill-current text-gray-700" />
       )}

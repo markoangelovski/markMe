@@ -5,7 +5,7 @@ import {
   getSearchContent,
   getSearchSuggestions
 } from "../../drivers/backend.driver";
-import { BookmarkIcon, FolderIcon } from "../Icons/Icons";
+import { BookmarkIcon, Favicon, FolderIcon } from "../Icons/Icons";
 
 // getSearchContent
 
@@ -69,6 +69,9 @@ const Search = () => {
               <a
                 className="flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-400 hover:text-white"
                 onClick={clear}
+                title={
+                  suggestedFolder.title + " on path: " + suggestedFolder.path
+                }
               >
                 <FolderIcon
                   classList="items-centere h-5 w-5 fill-current text-gray-800 hover:text-white"
@@ -91,7 +94,18 @@ const Search = () => {
                 clear();
               }}
             >
-              <BookmarkIcon classList="items-centere flex-shrink-0 h-5 w-5 fill-current text-gray-800 hover:text-white" />
+              {/* <BookmarkIcon classList="items-centere flex-shrink-0 h-5 w-5 fill-current text-gray-800 hover:text-white" /> */}
+              {(suggestedBookmark.meta && suggestedBookmark.meta.icon64) ||
+              (suggestedBookmark.meta && suggestedBookmark.meta.icon) ? (
+                <Favicon
+                  classList="h-5 w-5"
+                  icon={
+                    suggestedBookmark.meta.icon64 || suggestedBookmark.meta.icon
+                  }
+                />
+              ) : (
+                <BookmarkIcon classList="items-centere flex-shrink-0 h-5 w-5 fill-current text-gray-800 hover:text-white" />
+              )}
               <span className="px-4">
                 {suggestedBookmark.title || suggestedBookmark.meta?.title}
               </span>

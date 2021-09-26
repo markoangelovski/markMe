@@ -72,13 +72,16 @@ exports.getSuggestionData = async (req, res, next) => {
         path: 1,
         meta: {
           title: 1,
-          url: 1
+          url: 1,
+          icon: 1,
+          icon64: 1
         },
         url: 1
       }
     };
 
-    const limit = { $limit: 5 };
+    const folderLimit = { $limit: 10 };
+    const bookmarkLimit = { $limit: 5 };
 
     const title = {
       $search: {
@@ -101,10 +104,10 @@ exports.getSuggestionData = async (req, res, next) => {
     };
 
     return Promise.all([
-      Folder.aggregate([title, project, limit]),
-      Bookmark.aggregate([title, project, limit]),
-      Folder.aggregate([metaTitle, project, limit]),
-      Bookmark.aggregate([metaTitle, project, limit])
+      Folder.aggregate([title, project, folderLimit]),
+      Bookmark.aggregate([title, project, bookmarkLimit]),
+      Folder.aggregate([metaTitle, project, folderLimit]),
+      Bookmark.aggregate([metaTitle, project, bookmarkLimit])
     ]);
   };
 
