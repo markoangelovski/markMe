@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { Icon } from "../Icons/Icons";
+
 import {
   getSearchContent,
   getSearchSuggestions
@@ -89,23 +91,18 @@ const Search = () => {
               className="flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-400 hover:text-white"
               href={suggestedBookmark.url}
               target="_blank"
+              title={
+                suggestedBookmark?.parentFolderPath &&
+                suggestedBookmark.meta?.title +
+                  " on path: " +
+                  suggestedBookmark.parentFolderPath
+              }
               onClick={e => {
                 e.stopPropagation();
                 clear();
               }}
             >
-              {/* <BookmarkIcon classList="items-centere flex-shrink-0 h-5 w-5 fill-current text-gray-800 hover:text-white" /> */}
-              {(suggestedBookmark.meta && suggestedBookmark.meta.icon64) ||
-              (suggestedBookmark.meta && suggestedBookmark.meta.icon) ? (
-                <Favicon
-                  classList="h-5 w-5"
-                  icon={
-                    suggestedBookmark.meta.icon64 || suggestedBookmark.meta.icon
-                  }
-                />
-              ) : (
-                <BookmarkIcon classList="items-centere flex-shrink-0 h-5 w-5 fill-current text-gray-800 hover:text-white" />
-              )}
+              <Icon meta={suggestedBookmark.meta} />
               <span className="px-4">
                 {suggestedBookmark.title || suggestedBookmark.meta?.title}
               </span>

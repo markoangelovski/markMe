@@ -10,6 +10,7 @@ const Bookmark = new mongoose.Schema(
     likes: Number, // Number of likes is used for sorting
     noFavicon: Boolean, // Marks a Bookmark to not display the favicon in the frontend, used to not trigger Heroku website loads
     parentFolder: { type: mongoose.ObjectId, ref: "Folder" },
+    parentFolderPath: String,
     meta: Object
   },
   { timestamps: true }

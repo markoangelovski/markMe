@@ -1,6 +1,7 @@
-import { BookmarkIcon, Favicon } from "../Icons/Icons";
+import { Icon } from "../Icons/Icons";
 
 const Bookmark = ({ bookmark }) => {
+  console.log(`bookmark.description`, bookmark);
   return (
     <a
       data-type="bookmark"
@@ -9,16 +10,9 @@ const Bookmark = ({ bookmark }) => {
       className="flex-shrink-0 flex items-center"
       target="_blank"
       onClick={e => e.stopPropagation()}
+      title={bookmark.meta?.description || bookmark.meta?.url}
     >
-      {(bookmark.meta && bookmark.meta.icon64) ||
-      (bookmark.meta && bookmark.meta.icon) ? (
-        <Favicon
-          classList="h-5 w-5"
-          icon={bookmark.meta.icon64 || bookmark.meta.icon}
-        />
-      ) : (
-        <BookmarkIcon classList="h-5 w-5 fill-current text-gray-700" />
-      )}
+      <Icon meta={bookmark.meta} />
       <span
         data-type="bookmark"
         data-id={bookmark._id}

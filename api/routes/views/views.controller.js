@@ -43,6 +43,13 @@ exports.getFolderContentsByPath = async (req, res, next) => {
       user: req.userId
     }).select("-user -__v");
 
+    if (!folder) {
+      res.status(404).json({
+        message: `Folder with path ${req.query.path} not found.`,
+        folder: {}
+      });
+    }
+
     // Fetch chlidren folders and bookmarks of the requested folder
     const [folders, bookmarks] = await Promise.all([
       Folder.find({

@@ -38,7 +38,7 @@ exports.newBookmark = async (req, res, next) => {
     });
 
     // Update the bookmark count of the parent folder
-    if (bookmark.parentFolder)
+    if (bookmark.parentFolder) {
       Bookmark.countDocuments({
         parentFolder: bookmark.parentFolder
       }).then(bookmarkCount =>
@@ -48,6 +48,24 @@ exports.newBookmark = async (req, res, next) => {
         ).then(res => res)
       );
 
+      // Add Parent Folder path to Bookmark
+      Folder.findById(bookmark._doc.parentFolder)
+        .select("path")
+        .then(folder =>
+          Bookmark.updateOne(
+            { _id: bookmark._id },
+            { $set: { parentFolderPath: folder.path } }
+          ).exec()
+        )
+        .catch(error =>
+          console.warn(
+            "Error occurred while adding Parent Folder path to bookmark ",
+            bookmark.title,
+            error.message
+          )
+        );
+    }
+
     delete bookmark._doc.user;
     delete bookmark._doc.__v;
 
@@ -56,7 +74,7 @@ exports.newBookmark = async (req, res, next) => {
       bookmark: bookmark._doc
     });
   } catch (error) {
-    console.warn("New bookmakr error: ", error.message);
+    console.warn("New bookmark error: ", error.message);
     next(error);
   }
 };

@@ -70,6 +70,7 @@ exports.getSuggestionData = async (req, res, next) => {
         title: 1,
         description: 1,
         path: 1,
+        parentFolderPath: 1,
         meta: {
           title: 1,
           url: 1,

@@ -8,6 +8,7 @@ import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 import store from "../../state/store.js";
 
+import LoadingScreen from "../LoadingScreen/LoadingScreen.js";
 import Header from "../Header/Header.js";
 import ContextMenu from "../ContextMenu/ContextMenu.js";
 import Navbar from "../Navbar/Navbar.js";
@@ -39,7 +40,7 @@ const Layout = ({ children }) => {
     })();
   }, []);
 
-  if (!userAuthenticated) return <div>Loading...</div>;
+  if (!userAuthenticated) return <LoadingScreen />;
 
   return (
     <StoreProvider store={store}>

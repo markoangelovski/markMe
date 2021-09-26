@@ -1,3 +1,5 @@
+import { iconUrl, isIconOk } from "../Icons/Icons.helpers";
+
 export const FolderIcon = ({
   classList,
   folderCount,
@@ -98,3 +100,15 @@ export const Favicon = ({ classList, icon }) => (
     onError={e => (e.target.src = "/favicon.ico")}
   />
 );
+
+export const Icon = ({ meta, classList }) => {
+  return isIconOk(meta) ? (
+    <Favicon
+      // Only NewBookmarkForm has custom css for favicon in order to be inline with the bookmark title
+      classList={classList || "h-5 w-5 flex-shrink-0"}
+      icon={iconUrl(meta)}
+    />
+  ) : (
+    <BookmarkIcon classList="h-5 w-5 flex-shrink-0 fill-current text-gray-700" />
+  );
+};
