@@ -145,7 +145,7 @@ exports.getBookmarkMetadata = async (req, res, next) => {
 
     // Fetch Bookmark's metadata
     const meta = await getMeta(req.query.url);
-    if (meta.keywords) delete meta.keywords;
+    if (meta.hasOwnProperty("keywords")) delete meta.keywords;
 
     res.json({
       message: "Metadata successfully fetched.",
