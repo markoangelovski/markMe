@@ -42,7 +42,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
               icon={metadata?.icon64 || metadata?.icon}
             />
             <h2 className="ml-2 font-semibold inline">
-              {metadata?.title || metadata.url}
+              {metadata?.title || metadata?.url}
             </h2>
           </span>
           <p>{metadata?.description} </p>

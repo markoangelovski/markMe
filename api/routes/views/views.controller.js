@@ -145,12 +145,12 @@ exports.getBookmarkMetadata = async (req, res, next) => {
 
     // Fetch Bookmark's metadata
     const meta = await getMeta(req.query.url);
-    if (meta.hasOwnProperty("keywords")) delete meta.keywords;
+    const isMetaOk = typeof meta === "object";
+    if (isMetaOk && meta.hasOwnProperty("keywords")) delete meta.keywords;
 
     res.json({
       message: "Metadata successfully fetched.",
-      url: req.query.url,
-      meta
+      meta: isMetaOk ? meta : { url: req.query.url }
     });
   } catch (error) {
     console.warn("Get Bookmark Metadata error: ", error.message);
