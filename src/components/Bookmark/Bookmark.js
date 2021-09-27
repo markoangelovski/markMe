@@ -1,7 +1,6 @@
 import { Icon } from "../Icons/Icons";
 
 const Bookmark = ({ bookmark }) => {
-  console.log(`bookmark.description`, bookmark);
   return (
     <a
       data-type="bookmark"
