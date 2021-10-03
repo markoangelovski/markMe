@@ -154,6 +154,12 @@ exports.getBookmarkMetadata = async (req, res, next) => {
     const meta = await getMeta(req.query.url);
     const isMetaOk = typeof meta === "object";
     if (isMetaOk && meta.hasOwnProperty("keywords")) delete meta.keywords;
+    if (
+      isMetaOk &&
+      meta.hasOwnProperty("icon64") &&
+      Buffer.byteLength(meta.icon64, "utf8") > 20480
+    )
+      delete meta.icon64; // Deletes the icon64 if its file size is larger than 20KB
 
     res.json({
       message: "Metadata successfully fetched.",
