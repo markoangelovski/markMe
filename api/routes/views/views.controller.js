@@ -161,6 +161,12 @@ exports.getBookmarkMetadata = async (req, res, next) => {
     )
       delete meta.icon64; // Deletes the icon64 if its file size is larger than 20KB
 
+    // In some edge cases the url returned from getMeta is not the same as req.query.url. In that case substitute the meta.url with req.query.url
+    if (isMetaOk && meta.hasOwnProperty("url") && meta.url !== req.query.url) {
+      meta.metaUrl = meta.url;
+      meta.url = req.query.url;
+    }
+
     res.json({
       message: "Metadata successfully fetched.",
       meta: isMetaOk ? meta : { url: req.query.url }
