@@ -42,8 +42,15 @@ const Layout = ({ children }) => {
       }
     })();
   }, []);
-
-  if (!userAuthenticated) return <LoadingScreen />;
+  if (!userAuthenticated)
+    return (
+      <>
+        <Header>
+          <title>Authenticating...</title>
+        </Header>
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <StoreProvider store={store}>
