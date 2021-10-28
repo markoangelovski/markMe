@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     // Inserts /#/ into URL if URL does not contain /#/ - user landed on homepage
-    !/#/.test(router.asPath) && router.push(`/#/`);
+    !/\/#\//.test(router.asPath) && router.push(`/#/`);
   }, []);
 
   const hashPath = router.asPath.split("#");

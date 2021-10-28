@@ -23,19 +23,22 @@ const Layout = ({ children }) => {
   const { del } = useLocalStorage();
 
   useEffect(() => {
+    const path = Router.router.asPath;
+    // path.length > 1 in order to avoid sending callback="/" when hitting the home route while unauthenticated
+    const redirectPath = path.length > 1 ? "/login?callback=" + path : "/login";
     (async () => {
       try {
         const res = await auth({});
 
         if (res.status >= 400) {
           del("markmeUserDetails");
-          Router.replace("/login");
+          Router.replace(redirectPath);
         } else {
           setUserAuthenticated(true);
         }
       } catch (error) {
         console.warn("Auth Error: ", error);
-        Router.replace("/login");
+        Router.replace(redirectPath);
       }
     })();
   }, []);

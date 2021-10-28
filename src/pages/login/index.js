@@ -17,7 +17,7 @@ const Login = () => {
       try {
         // If authenticated user visits /login, redirect to homepage
         const res = await auth({});
-        if (res.status === 200) Router.replace("/");
+        if (res.status === 200) Router.replace("/#/");
         if (res.status >= 400) setCheck(true);
       } catch (error) {
         console.warn("Auth Error: ", error);
@@ -29,12 +29,15 @@ const Login = () => {
   const submit = async e => {
     e.preventDefault();
 
+    const cb = Router.router.asPath.split("callback=")[1];
+    const redirectPath = cb ? cb : "/#/";
+
     setresponseMsg(null);
     try {
       const res = await login({ auth: { username, password } });
       if (res.status === 200) {
         localStorage.setItem("markmeUserDetails", JSON.stringify(res.user));
-        Router.replace("/");
+        Router.replace(redirectPath);
       }
       if (res.status > 400)
         setresponseMsg(
