@@ -9,6 +9,14 @@
   - **.github/workflows/node.js.yml**
   - **config/production.json**
 
+Current domain details:
+
+- Domain: kovozi.ga
+- Registration Date: 23/10/2021
+- Expiry date: 23/10/2022
+
+Can be renewed one week before expiration date?
+
 ## Build
 
 - pushing to master branch triggers Github Actions from **.github/workflows/node.js.yml** file
