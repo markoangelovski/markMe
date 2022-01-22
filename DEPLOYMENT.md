@@ -11,15 +11,15 @@
 
 Current domain details:
 
-- Domain: kovozi.ga
-- Registration Date: 23/10/2021
-- Expiry date: 23/10/2022
+- Domain: angelovski.ga
+- Registration Date: 22/01/2022
+- Expiry date: 22/01/2023
 
 Can be renewed one week before expiration date?
 
 ## Build
 
-- pushing to master branch triggers Github Actions from **.github/workflows/node.js.yml** file
+- pushing the master branch to Github remote triggers Github Actions from **.github/workflows/node.js.yml** file
 
 # Backend
 
@@ -30,4 +30,4 @@ Can be renewed one week before expiration date?
 
 ## Build
 
-- Automatically deploys when a commit is pushed to master branch
+- Automatically deploys when a commit on master branch is pushed to Github remote
