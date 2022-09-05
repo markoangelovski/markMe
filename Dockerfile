@@ -8,6 +8,6 @@ RUN npm install --omit=dev
 
 COPY . /app
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["node", "api/app.js"]
