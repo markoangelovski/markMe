@@ -23,7 +23,7 @@
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.14",
-    "next": "10.0.6",
+    "next": "^12.2.5",
     "page-metadata-parser": "^1.1.4",
     "postcss": "^8.2.4",
     "react": "17.0.1",

@@ -1,4 +1,8 @@
-.next
-node_modules
+# Ignore everything
+*
 
-.env
+# Allow files and directories
+!/api/*
+!/constants/*
+!/config/*
+!/*.json

@@ -1,16 +1,13 @@
-FROM node:current-alpine 
+FROM node:16-alpine
 
-# Prepare working directory
-RUN mkdir -p markme
-WORKDIR /markme
+WORKDIR /app
 
-# Copy api and client package.json files
-COPY package*.json /markme/
+COPY package*.json /app/
 
-# Install api and next js dependencies
-RUN npm install
+RUN npm install --omit=dev
 
-# Copy all files and .next, api and public folders
-COPY . /markme
+COPY . /app
 
-CMD ["npm","run","local"]
+EXPOSE 3000
+
+CMD ["node", "api/app.js"]
