@@ -1,4 +1,5 @@
 {
-  "api": "https://markme-api.herokuapp.com",
+  "api": "https://markme-api.azurewebsites.net",
+  "api-legacy": "https://markme-api.herokuapp.com",
   "client": "https://markme.angelovski.ga"
 }
