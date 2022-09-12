@@ -25,9 +25,13 @@ Can be renewed one week before expiration date?
 
 ## Hosting
 
-- hosted on Heroku, project: https://dashboard.heroku.com/apps/markme-api
-- Connected to Github repo markoangelovski/markMe: https://github.com/markoangelovski/markMe
+- Hosted on Azure
+- Connected to Azure DevOps repo: https://dev.azure.com/angelovskimarko/Mark-Me
+
+- **Deprecated - Heroku**: Hosted on Heroku, project: https://dashboard.heroku.com/apps/markme-api
+- **Deprecated - Heroku**: Connected to Github repo markoangelovski/markMe: https://github.com/markoangelovski/markMe
 
 ## Build
 
-- Automatically deploys when a commit on master branch is pushed to Github remote
+- Automatically deploys when a commit on master branch is pushed to Azure DevOps remote
+- **Deprecated - Heroku**: Automatically deploys when a commit on master branch is pushed to Github remote
