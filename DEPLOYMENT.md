@@ -15,6 +15,12 @@ Current domain details:
 - Registration Date: 22/01/2022
 - Expiry date: 22/01/2023
 
+Current temporary domain details:
+
+- Domain: mordax.ga
+- Registration Date: 12/3/2022
+- Expiry date: 12/3/2023
+
 Can be renewed one week before expiration date?
 
 ## Build
