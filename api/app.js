@@ -19,9 +19,9 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(
   cors({
-    origin: config.client,
+    origin: config.origin,
     credentials: true,
-    optionsSuccessStatus: 204
+    optionsSuccessStatus: 204,
   })
 );
 if (dev) app.use(require("morgan")("dev"));
