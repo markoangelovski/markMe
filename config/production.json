@@ -2,6 +2,7 @@
   "api": "https://markme-prod-projects-fazagc.mo1.mogenius.io",
   "api-main": "https://markme-api.azurewebsites.net",
   "api-legacy": "https://markme-api.herokuapp.com",
+  "basePath": "/markMe",
   "origin": "https://markoangelovski.github.io",
   "client": "https://markoangelovski.github.io/markMe",
   "client1": "https://markme.mordax.ga",

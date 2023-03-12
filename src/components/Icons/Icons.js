@@ -1,10 +1,13 @@
 import { iconUrl, isIconOk } from "../Icons/Icons.helpers";
 
+// GitHub Pages - added only for hosting on GH Pages as base path https://nextjs.org/docs/api-reference/next.config.js/basepath#images
+const { basePath } = require("../../../config");
+
 export const FolderIcon = ({
   classList,
   folderCount,
   bookmarkCount,
-  showSubFolders
+  showSubFolders,
 }) => {
   const closed = typeof showSubFolders === "boolean" && !showSubFolders;
   const open = typeof showSubFolders === "boolean" && showSubFolders;
@@ -97,7 +100,7 @@ export const Favicon = ({ classList, icon }) => (
     className={classList}
     src={icon}
     alt=""
-    onError={e => (e.target.src = "/favicon.ico")}
+    onError={(e) => (e.target.src = basePath + "/favicon.ico")}
   />
 );
 

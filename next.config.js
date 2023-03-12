@@ -1,7 +1,7 @@
-const { client } = require("./config");
+const { client, basePath } = require("./config");
 
 module.exports = {
   // Use the CDN in production and localhost for development.
   assetPrefix: client,
-  basePath: "/markMe",
+  basePath,
 };
