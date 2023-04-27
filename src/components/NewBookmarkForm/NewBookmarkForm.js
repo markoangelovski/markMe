@@ -3,14 +3,17 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 
 import { BookmarkIcon, Favicon, Icon } from "../Icons/Icons.js";
 
+// GitHub Pages - added only for hosting on GH Pages as base path https://nextjs.org/docs/api-reference/next.config.js/basepath#images
+const { basePath } = require("../../../config");
+
 const NewBookmarkForm = ({ setShowModal }) => {
-  const { folder, metadata } = useStoreState(state => state);
-  const { createNewBookmark } = useStoreActions(actions => actions);
+  const { folder, metadata } = useStoreState((state) => state);
+  const { createNewBookmark } = useStoreActions((actions) => actions);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleCreateBookmark = async e => {
+  const handleCreateBookmark = async (e) => {
     e.preventDefault();
 
     const body = { url: metadata.url, meta: metadata };
@@ -26,14 +29,14 @@ const NewBookmarkForm = ({ setShowModal }) => {
   };
 
   return (
-    <div className="flex flex-col w-1/2" onClick={e => e.stopPropagation()}>
+    <div className="flex flex-col w-1/2" onClick={(e) => e.stopPropagation()}>
       <div className="flex mb-6 bg-white">
         <img
           className="h-40 w-52 object-cover"
           src={metadata?.image || "/placeholder.png"}
           alt={metadata?.title}
           title={metadata?.title}
-          onError={e => (e.target.src = "/placeholder.png")}
+          onError={(e) => (e.target.src = basePath + "/placeholder.png")}
         />
         <div className="flex flex-col p-3">
           <span className="mb-1">
@@ -51,13 +54,13 @@ const NewBookmarkForm = ({ setShowModal }) => {
       </div>
       <form
         className="flex flex-col p-3 bg-white"
-        onSubmit={e => handleCreateBookmark(e)}
+        onSubmit={(e) => handleCreateBookmark(e)}
       >
         <div className="mb-2 flex">
           <BookmarkIcon classList="inline h-5 w-5 fill-current text-gray-700" />
           <div className="ml-2 w-full">
             <input
-              onInput={e =>
+              onInput={(e) =>
                 e.target.value.length < 250 && setTitle(e.target.value)
               }
               value={title}
@@ -69,7 +72,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
           </div>
         </div>
         <input
-          onInput={e =>
+          onInput={(e) =>
             e.target.value.length < 250 && setDescription(e.target.value)
           }
           value={description}
