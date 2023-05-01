@@ -1,3 +1,5 @@
+import NProgress from "nprogress";
+
 import * as backend from "../../config";
 
 const makeDriver =
@@ -23,7 +25,7 @@ const makeDriver =
     const options = {
       method,
       headers,
-      credentials: "include"
+      credentials: "include",
     };
 
     // Set request body
@@ -31,10 +33,12 @@ const makeDriver =
 
     let status;
 
-    const res = await fetch(url, options).then(res => {
+    NProgress.start();
+    const res = await fetch(url, options).then((res) => {
       status = res.status;
       return res.json();
     });
+    NProgress.done();
 
     return { status, ...res };
   };

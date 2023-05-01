@@ -1,5 +1,6 @@
 {
   "api": "http://localhost:3001",
   "client": "http://localhost:3000",
-  "basePath": ""
+  "basePath": "",
+  "origin": "http://localhost:3000"
 }

@@ -4,9 +4,10 @@ import { useStoreState } from "easy-peasy";
 import Folder from "../Folder/Folder.js";
 import Bookmark from "../Bookmark/Bookmark.js";
 import Footer from "../Footer/Footer.js";
+import { sort } from "../../helpers/helpers.js";
 
 const HomeContent = () => {
-  const { sidebar } = useStoreState(state => state);
+  const { sidebar } = useStoreState((state) => state);
   return (
     <>
       <div
@@ -15,10 +16,10 @@ const HomeContent = () => {
         // onDragOver={e => e.preventDefault()} // Required for drag and drop to function
         // onDrop={e => handleDrop(e)}
       >
-        {sidebar.folders?.map(folder => (
+        {sidebar.folders?.sort(sort).map((folder) => (
           <Folder key={folder._id} folder={folder} />
         ))}
-        {sidebar.bookmarks?.map(bookmark => (
+        {sidebar.bookmarks?.sort(sort).map((bookmark) => (
           <Bookmark key={bookmark._id} bookmark={bookmark} />
         ))}
         {/* 

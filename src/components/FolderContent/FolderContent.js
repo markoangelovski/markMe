@@ -6,11 +6,12 @@ import Header from "../Header/Header";
 import Folder from "../Folder/Folder";
 import Bookmark from "../Bookmark/Bookmark";
 import Footer from "../Footer/Footer";
+import { sort } from "../../helpers/helpers";
 
 const FolderContent = () => {
-  const { folder } = useStoreState(state => state);
+  const { folder } = useStoreState((state) => state);
   const { fetchActiveFolder, fetchBookmarkMetadata, setShowNewBookmarkModal } =
-    useStoreActions(actions => actions);
+    useStoreActions((actions) => actions);
 
   const router = useRouter();
   const folderPath = router.asPath.split("#")[1];
@@ -19,7 +20,7 @@ const FolderContent = () => {
     fetchActiveFolder(folderPath);
   }, [folderPath]);
 
-  const handleDrop = async e => {
+  const handleDrop = async (e) => {
     e.preventDefault();
 
     const url = e.dataTransfer.getData("text/uri-list");
@@ -36,18 +37,20 @@ const FolderContent = () => {
       <Header>{<title>{folder.title || "Loading..."}</title>}</Header>
       <div
         className="flex-1 p-3 overflow-x-auto flex flex-col flex-wrap h-full"
-        onDragOver={e => e.preventDefault()} // Required for drag and drop to function
-        onDrop={e => handleDrop(e)}
+        onDragOver={(e) => e.preventDefault()} // Required for drag and drop to function
+        onDrop={(e) => handleDrop(e)}
       >
         {folder
-          ? folder.folders?.map((folder, i) => (
-              <Folder key={folder.path} folder={folder} />
-            ))
+          ? folder.folders
+              ?.sort(sort)
+              .map((folder, i) => <Folder key={folder.path} folder={folder} />)
           : null}
         {folder
-          ? folder.bookmarks?.map((bookmark, i) => (
-              <Bookmark key={bookmark._id} bookmark={bookmark} />
-            ))
+          ? folder.bookmarks
+              ?.sort(sort)
+              .map((bookmark, i) => (
+                <Bookmark key={bookmark._id} bookmark={bookmark} />
+              ))
           : null}
       </div>
       <Footer
