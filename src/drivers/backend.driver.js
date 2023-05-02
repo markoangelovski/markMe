@@ -20,7 +20,8 @@ const makeDriver =
 
     // Set Authorization header for login
     if (auth)
-      headers["Authorization"] = btoa(`${auth.username}:${auth.password}`);
+      headers["Authorization"] =
+        "Basic " + btoa(`${auth.username}:${auth.password}`);
 
     const options = {
       method,

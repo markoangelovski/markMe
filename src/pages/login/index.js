@@ -26,7 +26,7 @@ const Login = () => {
     })();
   }, []);
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
 
     const cb = Router.router.asPath.split("callback=")[1];
@@ -61,7 +61,7 @@ const Login = () => {
         className="min-h-screen bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80')"
+            "url('https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80')",
         }}
       >
         <div className="flex justify-end">
@@ -81,7 +81,7 @@ const Login = () => {
                     type="email"
                     name="email"
                     placeholder="email"
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
                 <div className="my-3">
@@ -93,43 +93,15 @@ const Login = () => {
                     type="password"
                     name="password"
                     placeholder="password"
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                {/* <div className="flex justify-between">
-                  <div>
-                    <input
-                      className="cursor-pointer"
-                      type="radio"
-                      name="rememberme"
-                    />
-                    <span className="text-sm">Remember Me</span>
-                  </div>
-                  <span className="text-sm text-blue-700 hover:underline cursor-pointer">
-                    Forgot password?
-                  </span>
-                </div> */}
                 <div className="">
                   <button className="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100">
                     Login now
                   </button>
-
-                  {/* <div className="flex  space-x-2 justify-center items-end bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-md transition duration-100">
-                    <img
-                      className=" h-5 cursor-pointer"
-                      src="https://i.imgur.com/arC60SB.png"
-                      alt=""
-                    />
-                    <button>Or sign-in with google</button>
-                  </div> */}
                 </div>
               </form>
-              {/* <p className="mt-8">
-                Dont have an account?
-                <span className="cursor-pointer text-sm text-blue-600">
-                  Join free today
-                </span>
-              </p> */}
               <p
                 className={`mt-8 ${
                   check ? "visible" : "invisible"

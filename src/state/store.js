@@ -26,11 +26,17 @@ export default createStore({
   }),
   setSidebar: action((state, sidebar) => {
     state.sidebar = {
-      folders: sidebar.folders,
-      bookmarks: sidebar.bookmarks
+      totalFolders: sidebar.totalFolders,
+      totalBookmarks: sidebar.totalBookmarks,
+      newFolders: sidebar.newFolders,
+      newBookmarks: sidebar.newBookmarks,
+      recentFolders: sidebar.recentFolders,
+      recentBookmarks: sidebar.recentBookmarks,
+      rootFolders: sidebar.rootFolders,
+      rootBookmarks: sidebar.rootBookmarks
     };
   }),
-  fetchSidebarContent: thunk(async actions => {
+  fetchSidebarContent: thunk(async (actions) => {
     const res = await getSidebarContent({});
     res.status === 200 && actions.setSidebar(res);
     res.status > 201 && actions.setError(res);

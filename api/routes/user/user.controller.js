@@ -22,7 +22,7 @@ exports.register = async (req, res, next) => {
 
       user = await User.create({
         username: req.body.username,
-        password
+        password,
       });
 
       if (!user)
@@ -30,11 +30,11 @@ exports.register = async (req, res, next) => {
 
       res.status(201).json({
         message: "User registration completed.",
-        user: user.username
+        user: user.username,
       });
     } else {
       res.json({
-        message: `Username ${user.username} is aleady taken, please try a different one.`
+        message: `Username ${user.username} is aleady taken, please try a different one.`,
       });
     }
   } catch (error) {
@@ -45,11 +45,11 @@ exports.register = async (req, res, next) => {
 
 // desc: Login user
 // POST /user/login
-// payload: Authorization header base64 username:password
+// payload: Authorization header, "Basic base64 encoded username:password"
 exports.login = async (req, res, next) => {
   try {
     const authString = Buffer.from(
-      req.headers.authorization,
+      req.headers.authorization.split(" ")[1],
       "base64"
     ).toString("utf-8");
 
@@ -64,13 +64,13 @@ exports.login = async (req, res, next) => {
       if (!password) {
         res.status(401);
         return next({
-          message: "Username and password combo not found."
+          message: "Username and password combo not found.",
         });
       }
 
       const token = jwt.sign(
         {
-          userId: user._id
+          userId: user._id,
         },
         process.env.USER_AUTH,
         { expiresIn: "7d" }
@@ -80,16 +80,16 @@ exports.login = async (req, res, next) => {
         secure: process.env.NODE_ENV !== "development",
         maxAge: 604800000, // 7 days
         httpOnly: true,
-        sameSite: process.env.NODE_ENV === "development" ? "Lax" : "None"
+        sameSite: process.env.NODE_ENV === "development" ? "Lax" : "None",
       });
 
       res.json({
         message: "Login successful.",
-        user: { username: user.username, avatar: user.avatar }
+        user: { username: user.username, avatar: user.avatar },
       });
     } else {
       res.status(422).json({
-        message: "Unable to login."
+        message: "Unable to login.",
       });
     }
   } catch (error) {
@@ -104,7 +104,7 @@ exports.logout = async (req, res, next) => {
   res.clearCookie("access_token", {
     secure: process.env.NODE_ENV !== "development",
     maxAge: 604800000, // 7 days
-    httpOnly: true
+    httpOnly: true,
   });
 
   res.json({ message: "Logout successful." });

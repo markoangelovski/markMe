@@ -9,23 +9,70 @@ const { urlRgx } = require("../../../constants/constants.js");
 // desc: Fetch all folders and bookmarks for Sidebar (folders and bookmarks without Parent Folder)
 // GET /views/sidebar
 exports.getSidebarFolders = async (req, res, next) => {
+  const sevenDaysAgo = new Date().getTime() - 604800000; // 7 days in ms
   try {
-    // Find all folders and bookmarks without a parent folder property
-    const [folders, bookmarks] = await Promise.all([
+    const [
+      rootFolders,
+      rootBookmarks,
+      totalFolders,
+      totalBookmarks,
+      newFolders,
+      newBookmarks,
+      recentFolders,
+      recentBookmarks
+    ] = await Promise.all([
       Folder.find({
         user: req.userId,
-        parentFolder: { $exists: false }
+        parentFolder: { $exists: false } // Find all folders and bookmarks without a parent folder property
       }).select("-user -__v"),
       Bookmark.find({
         user: req.userId,
         parentFolder: { $exists: false }
-      }).select("-user -__v")
+      }).select("-user -__v"),
+      Folder.countDocuments({
+        user: req.userId
+      }),
+      Bookmark.countDocuments({
+        user: req.userId
+      }),
+      Folder.countDocuments({
+        user: req.userId,
+        createdAt: { $gt: new Date(sevenDaysAgo) }
+      }),
+      Bookmark.countDocuments({
+        user: req.userId,
+        createdAt: { $gt: new Date(sevenDaysAgo) }
+      }),
+      Folder.find(
+        {
+          user: req.userId
+        },
+        null,
+        { limit: 10 } // Find 10 most recent folders
+      )
+        .sort("-createdAt")
+        .select("-user -__v"),
+      Bookmark.find(
+        {
+          user: req.userId
+        },
+        null,
+        { limit: 10 } // Find 10 most recent folders
+      )
+        .sort("-createdAt")
+        .select("-user -__v")
     ]);
 
     res.json({
       message: "Folders successfully fetched.",
-      folders,
-      bookmarks
+      rootFolders,
+      rootBookmarks,
+      totalFolders,
+      totalBookmarks,
+      newFolders,
+      newBookmarks,
+      recentFolders,
+      recentBookmarks
     });
   } catch (error) {
     console.warn("Get Sidebar folders error: ", error.message);
