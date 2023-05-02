@@ -5,8 +5,8 @@ import SidebarFolder from "../SidebarFolder/SidebarFolder.js";
 import SidebarBookmark from "../SidebarBookmark/SidebarBookmark.js";
 
 const Sidebar = () => {
-  const { sidebar } = useStoreState(state => state);
-  const { fetchSidebarContent } = useStoreActions(actions => actions);
+  const { sidebar } = useStoreState((state) => state);
+  const { fetchSidebarContent } = useStoreActions((actions) => actions);
 
   useEffect(() => {
     // Fetch Sidebar contents
@@ -14,20 +14,20 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <nav className="w-64 p-6 bg-gray-100 overflow-y-auto">
-      <h2 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+    <nav className="w-64 overflow-y-auto bg-gray-100 p-6">
+      <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-600">
         Folders
       </h2>
       <div className="mt-3">
-        {sidebar?.folders?.map(folder => (
+        {sidebar?.rootFolders?.map((folder) => (
           <SidebarFolder key={folder._id} folder={folder} />
         ))}
       </div>
-      <h2 className="mt-10 text-xs font-semibold text-gray-600 uppercase tracking-wide">
+      <h2 className="mt-10 text-xs font-semibold uppercase tracking-wide text-gray-600">
         Bookmarks
       </h2>
       <div className="mt-3">
-        {sidebar?.bookmarks?.map(bookmark => (
+        {sidebar?.rootBookmarks?.map((bookmark) => (
           <SidebarBookmark key={bookmark._id} bookmark={bookmark} />
         ))}
       </div>

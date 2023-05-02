@@ -10,7 +10,7 @@ import HomeStats from "../HomeStats/HomeStats.js";
 
 const HomeContent = () => {
   const { sidebar } = useStoreState((state) => state);
-  console.log("sidebar: ", sidebar);
+
   return (
     <>
       <div className="flex justify-between p-3">
@@ -37,6 +37,25 @@ const HomeContent = () => {
           title="New Bookmarks"
           elementTitle="Number of new bookmarks created in last 7 days."
           totalItems={sidebar.newBookmarks}
+        />
+      </div>
+      <div className="flex">
+        <HomeItemsTable
+          title={"Recent folders"}
+          headings={[
+            "Title",
+            "Path",
+            "Sub-folders",
+            "Bookmarks",
+            "Created",
+            "Modified"
+          ]}
+          folders={sidebar.recentFolders}
+        />
+        <HomeItemsTable
+          title={"Recent bookmarks"}
+          headings={["Title", "Path", "Created", "Modified"]}
+          bookmarks={sidebar.recentBookmarks}
         />
       </div>
       <div className="flex">
