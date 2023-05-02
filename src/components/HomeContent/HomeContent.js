@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useStoreState } from "easy-peasy";
 
 import Folder from "../Folder/Folder.js";

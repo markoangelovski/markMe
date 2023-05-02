@@ -96,7 +96,7 @@ export default createStore({
       !res.bookmark.parentFolder &&
         actions.setSidebar({
           ...sidebar,
-          bookmarks: [...sidebar.bookmarks, res.bookmark]
+          bookmarks: [...sidebar.rootBookmarks, res.bookmark]
         });
 
       // If created bookmark is Child Bookmark, add bookmark to the currently Active Folder's bookmarks

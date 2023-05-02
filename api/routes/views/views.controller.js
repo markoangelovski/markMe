@@ -4,12 +4,11 @@ const Bookmark = require("../bookmark/bookmark.model.js");
 
 // Helper imports
 const { getMeta } = require("../bookmark/bookmark.helpers.js");
-const { urlRgx } = require("../../../constants/constants.js");
+const { urlRgx, sevenDaysAgo } = require("../../../constants/constants.js");
 
 // desc: Fetch all folders and bookmarks for Sidebar (folders and bookmarks without Parent Folder)
 // GET /views/sidebar
 exports.getSidebarFolders = async (req, res, next) => {
-  const sevenDaysAgo = new Date().getTime() - 604800000; // 7 days in ms
   try {
     const [
       rootFolders,
