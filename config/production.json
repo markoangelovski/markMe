@@ -4,8 +4,9 @@
   "api-legacy2": "https://markme-api.azurewebsites.net",
   "api-legacy": "https://markme-api.herokuapp.com",
   "basePath": "/markMe",
-  "origin": "https://markoangelovski.github.io",
-  "client": "https://markoangelovski.github.io/markMe",
+  "origin": "https://markme.angelovski.top",
+  "client": "https://markme.angelovski.top",
   "client1": "https://markme.mordax.ga",
-  "client2": "https://markme.angelovski.ga"
+  "client2": "https://markme.angelovski.ga",
+  "client3": "https://markoangelovski.github.io/markMe"
 }

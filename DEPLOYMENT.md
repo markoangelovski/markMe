@@ -26,6 +26,12 @@ Can be renewed one week before expiration date?
 Edit 13 March 2023:
 **Both domains expired, no new domains can be created.**
 
+Current domain in use:
+
+- Domain: angelovski.top
+- Registration Date: 03/05/2023
+- Expiry date: 03/05/2024
+
 ## Build
 
 - pushing the master branch to Github remote triggers Github Actions from **.github/workflows/node.js.yml** file
@@ -36,12 +42,14 @@ Edit 13 March 2023:
 
 - Hosted on Railway.app, project: https://markme.up.railway.app
 
-- - **Deprecated - Mogenius**: Hosted on Mogenius, project: https://markme-prod-projects-fazagc.mo1.mogenius.io
+- **Deprecated - Mogenius**: Hosted on Mogenius, project: https://markme-prod-projects-fazagc.mo1.mogenius.io
 - **Deprecated - Azure**: Connected to Azure DevOps repo: https://dev.azure.com/angelovskimarko/Mark-Me
 - **Deprecated - Heroku**: Hosted on Heroku, project: https://dashboard.heroku.com/apps/markme-api
 - **Deprecated - Heroku**: Connected to Github repo markoangelovski/markMe: https://github.com/markoangelovski/markMe
 
 ## Build
 
-- Automatically deploys when a commit on master branch is pushed to Azure DevOps remote
+- Railway.app: Automatically deploys when a commit on master branch is pushed to GitHub remote
+
+- **Deprecated - Azure DevOps**: Automatically deploys when a commit on master branch is pushed to Azure DevOps remote
 - **Deprecated - Heroku**: Automatically deploys when a commit on master branch is pushed to Github remote
