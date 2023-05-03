@@ -4,7 +4,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import { BookmarkIcon, Favicon, Icon } from "../Icons/Icons.js";
 
 // GitHub Pages - added only for hosting on GH Pages as base path https://nextjs.org/docs/api-reference/next.config.js/basepath#images
-const { basePath } = require("../../../config");
+// const { basePath } = require("../../../config");
 
 const NewBookmarkForm = ({ setShowModal }) => {
   const { folder, metadata } = useStoreState((state) => state);
@@ -29,14 +29,14 @@ const NewBookmarkForm = ({ setShowModal }) => {
   };
 
   return (
-    <div className="flex flex-col w-1/2" onClick={(e) => e.stopPropagation()}>
-      <div className="flex mb-6 bg-white">
+    <div className="flex w-1/2 flex-col" onClick={(e) => e.stopPropagation()}>
+      <div className="mb-6 flex bg-white">
         <img
           className="h-40 w-52 object-cover"
           src={metadata?.image || "/placeholder.png"}
           alt={metadata?.title}
           title={metadata?.title}
-          onError={(e) => (e.target.src = basePath + "/placeholder.png")}
+          onError={(e) => (e.target.src = /* basePath +  */ "/placeholder.png")}
         />
         <div className="flex flex-col p-3">
           <span className="mb-1">
@@ -45,7 +45,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
               icon={metadata?.icon64 || metadata?.icon}
             /> */}
             <Icon meta={metadata} classList="h-5 w-5 inline" />
-            <h2 className="ml-2 font-semibold inline">
+            <h2 className="ml-2 inline font-semibold">
               {metadata?.title || metadata?.url}
             </h2>
           </span>
@@ -53,7 +53,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
         </div>
       </div>
       <form
-        className="flex flex-col p-3 bg-white"
+        className="flex flex-col bg-white p-3"
         onSubmit={(e) => handleCreateBookmark(e)}
       >
         <div className="mb-2 flex">
@@ -67,7 +67,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
               type="text"
               name="title"
               placeholder="New Bookmark title"
-              className="w-full text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+              className="focus:outline-none w-full text-sm text-white placeholder-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder-gray-600"
             />
           </div>
         </div>
@@ -79,7 +79,7 @@ const NewBookmarkForm = ({ setShowModal }) => {
           type="textarea"
           name="description"
           placeholder="New Bookmark description"
-          className="mb-2 text-sm placeholder-gray-400 text-white focus:bg-white focus:placeholder-gray-600 focus:text-gray-900 focus:outline-none"
+          className="focus:outline-none mb-2 text-sm text-white placeholder-gray-400 focus:bg-white focus:text-gray-900 focus:placeholder-gray-600"
         />
         <input className="cursor-pointer" type="submit" value="Create" />
       </form>
