@@ -26,7 +26,7 @@ const makeDriver =
     const options = {
       method,
       headers,
-      credentials: "include",
+      credentials: "include"
     };
 
     // Set request body
@@ -58,6 +58,7 @@ export const deleteFolder = makeDriver("DELETE", "/folder/delete", false);
 export const newBookmark = makeDriver("POST", "/bookmark/new", true);
 export const updateBookmark = makeDriver("PATCH", "/bookmark/update", true);
 export const deleteBookmark = makeDriver("DELETE", "/bookmark/delete", false);
+export const bookmarkStats = makeDriver("POST", "/bookmark/stats", false);
 
 // Views management drivers
 export const getSidebarContent = makeDriver("GET", "/views/sidebar", false);

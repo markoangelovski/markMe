@@ -18,7 +18,9 @@ exports.getSidebarFolders = async (req, res, next) => {
       newFolders,
       newBookmarks,
       recentFolders,
-      recentBookmarks
+      recentBookmarks,
+      popularFolders,
+      popularBookmarks
     ] = await Promise.all([
       Folder.find({
         user: req.userId,
@@ -59,6 +61,24 @@ exports.getSidebarFolders = async (req, res, next) => {
         { limit: 10 } // Find 10 most recent folders
       )
         .sort("-createdAt")
+        .select("-user -__v"),
+      Folder.find(
+        {
+          user: req.userId
+        },
+        null,
+        { limit: 10 } // Find 10 most recent folders
+      )
+        .sort("-hitCount")
+        .select("-user -__v"),
+      Bookmark.find(
+        {
+          user: req.userId
+        },
+        null,
+        { limit: 10 } // Find 10 most recent folders
+      )
+        .sort("-hitCount")
         .select("-user -__v")
     ]);
 
@@ -71,7 +91,9 @@ exports.getSidebarFolders = async (req, res, next) => {
       newFolders,
       newBookmarks,
       recentFolders,
-      recentBookmarks
+      recentBookmarks,
+      popularFolders,
+      popularBookmarks
     });
   } catch (error) {
     console.warn("Get Sidebar folders error: ", error.message);
@@ -117,10 +139,9 @@ exports.getFolderContentsByPath = async (req, res, next) => {
       }
     });
 
-    // TODO: Add the "Most viewed" functionality to fetch folders with the greatest view count.
-    // Folder.updateOne({ _id: folder._id }, { $inc: { hitCount: 1 } }).then(
-    //   res => res
-    // );
+    Folder.updateOne({ _id: folder._id }, { $inc: { hitCount: 1 } }).then(
+      (res) => res
+    );
   } catch (error) {
     console.warn("Get Folder contents error: ", error.message);
     next(error);

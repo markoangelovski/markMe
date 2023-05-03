@@ -11,7 +11,8 @@ const Bookmark = new mongoose.Schema(
     noFavicon: Boolean, // Marks a Bookmark to not display the favicon in the frontend, used to not trigger Heroku website loads
     parentFolder: { type: mongoose.ObjectId, ref: "Folder" },
     parentFolderPath: String,
-    meta: Object
+    meta: Object,
+    hitCount: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

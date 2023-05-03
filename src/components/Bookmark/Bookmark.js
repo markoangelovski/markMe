@@ -1,6 +1,8 @@
 import { sevenDaysAgo } from "../../../constants/constants";
 import { Icon, IconForNew } from "../Icons/Icons";
 
+import { client } from "../../../config";
+
 const Bookmark = ({ bookmark }) => {
   const isBookmarkNew = new Date(bookmark.createdAt) > sevenDaysAgo;
 
@@ -9,7 +11,7 @@ const Bookmark = ({ bookmark }) => {
       <a
         data-type="bookmark"
         data-id={bookmark._id}
-        href={bookmark.url}
+        href={client + "/stats?url=" + bookmark.url + "&id=" + bookmark._id}
         className="relative flex items-center hover:bg-gray-300"
         target="_blank"
         onClick={(e) => e.stopPropagation()}

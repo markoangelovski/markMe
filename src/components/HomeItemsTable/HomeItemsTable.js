@@ -5,6 +5,7 @@ import Bookmark from "../Bookmark/Bookmark";
 import Folder from "../Folder/Folder";
 
 const HomeItemsTable = ({ title, headings, folders, bookmarks }) => {
+  const isPopularList = headings.includes("Visits");
   return (
     <>
       <div className="flex w-3/6 flex-col overflow-hidden p-3">
@@ -38,6 +39,11 @@ const HomeItemsTable = ({ title, headings, folders, bookmarks }) => {
                         <td className="whitespace-nowrap px-6">
                           <Link href={`/#${folder.path}`}>{folder.path}</Link>
                         </td>
+                        {isPopularList && (
+                          <td className="whitespace-nowrap px-6">
+                            {folder.hitCount}
+                          </td>
+                        )}
                         <td className="whitespace-nowrap px-6">
                           {folder.folderCount}
                         </td>
@@ -64,6 +70,11 @@ const HomeItemsTable = ({ title, headings, folders, bookmarks }) => {
                             <a>{bookmark.parentFolderPath}</a>
                           </Link>
                         </td>
+                        {isPopularList && (
+                          <td className="whitespace-nowrap px-6">
+                            {bookmark.hitCount}
+                          </td>
+                        )}
                         <td className="whitespace-nowrap px-6">
                           {fmtTime(bookmark.createdAt)}
                         </td>

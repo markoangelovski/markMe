@@ -16,7 +16,8 @@ const {
 const {
   newBookmark,
   updateBookmark,
-  deleteBookmark
+  deleteBookmark,
+  bookmarkStats
 } = require("./routes/bookmark/bookmark.controller.js");
 const {
   getSidebarFolders,
@@ -45,6 +46,7 @@ router.delete("/folder/delete/:folderId", auth, deleteFolder);
 router.post("/bookmark/new", auth, newBookmark);
 router.patch("/bookmark/update/:bookmarkId", auth, updateBookmark);
 router.delete("/bookmark/delete/:bookmarkId", auth, deleteBookmark);
+router.post("/bookmark/stats", auth, bookmarkStats);
 
 // Views routes
 router.get("/views/sidebar", auth, getSidebarFolders);

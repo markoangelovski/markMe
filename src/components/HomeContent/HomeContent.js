@@ -59,6 +59,26 @@ const HomeContent = () => {
       </div>
       <div className="flex">
         <HomeItemsTable
+          title={"Popular folders"}
+          headings={[
+            "Title",
+            "Path",
+            "Visits",
+            "Sub-folders",
+            "Bookmarks",
+            "Created",
+            "Modified"
+          ]}
+          folders={sidebar.popularFolders}
+        />
+        <HomeItemsTable
+          title={"Popular bookmarks"}
+          headings={["Title", "Path", "Visits", "Created", "Modified"]}
+          bookmarks={sidebar.popularBookmarks}
+        />
+      </div>
+      <div className="flex">
+        <HomeItemsTable
           title={"Root folders"}
           headings={[
             "Title",

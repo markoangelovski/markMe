@@ -33,7 +33,9 @@ export default createStore({
       recentFolders: sidebar.recentFolders,
       recentBookmarks: sidebar.recentBookmarks,
       rootFolders: sidebar.rootFolders,
-      rootBookmarks: sidebar.rootBookmarks
+      rootBookmarks: sidebar.rootBookmarks,
+      popularFolders: sidebar.popularFolders,
+      popularBookmarks: sidebar.popularBookmarks
     };
   }),
   fetchSidebarContent: thunk(async (actions) => {

@@ -55,6 +55,7 @@ exports.newFolder = async (req, res, next) => {
       ...folderData
     });
 
+    // TODO: Možda da ovdje samo increment folder count by one, da ne zove bazu bez veze?
     if (parentFolderPath) {
       // Update Parent Folder's folder count
       const folderCount = await Folder.countDocuments({
@@ -89,29 +90,29 @@ exports.updateFolder = async (req, res, next) => {
   try {
     // Prepare folder data to update
     const payload = {};
-    req.body.forEach(prop => {
+    req.body.forEach((prop) => {
       payload[prop.propKey] = prop.propValue;
     });
 
     // Update the folder data
     Folder.findByIdAndUpdate(req.params.folderId, {
       $set: payload
-    }).then(folder => {
+    }).then((folder) => {
       // If folder has been moved from one folder to the other, find the number of subfolders for each and update the folder count for both
       if (payload.parentFolder !== folder.parentFolder) {
         Promise.all([
           Folder.countDocuments({ parentFolder: payload.parentFolder }),
           Folder.countDocuments({ parentFolder: folder.parentFolder })
-        ]).then(res => {
+        ]).then((res) => {
           Promise.all([
             Folder.updateOne(
               { _id: payload.parentFolder },
               { $set: { folderCount: res[0] } }
-            ).then(res => res),
+            ).then((res) => res),
             Folder.updateOne(
               { _id: folder.parentFolder },
               { $set: { folderCount: res[1] } }
-            ).then(res => res)
+            ).then((res) => res)
           ]);
         });
       }
@@ -131,7 +132,7 @@ exports.updateFolder = async (req, res, next) => {
 exports.deleteFolder = async (req, res, next) => {
   try {
     Folder.deleteOne({ _id: req.params.folderId, user: req.userId }).then(
-      res => res
+      (res) => res
     );
 
     res.json({
