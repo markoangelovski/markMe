@@ -3,12 +3,13 @@ import { useState } from "react";
 import { getFolderContents } from "../../drivers/backend.driver";
 
 import FolderItem from "./FolderItem";
+import { sort } from "../../helpers/helpers";
 
 const SidebarFolder = ({ folder }) => {
   const [folders, setFolders] = useState([]);
   const [showSubFolders, setShowSubFolders] = useState(false);
 
-  const handleGetSubFolders = async e => {
+  const handleGetSubFolders = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -20,7 +21,7 @@ const SidebarFolder = ({ folder }) => {
           param: `${folder._id}/sub-folders`
         }));
 
-      subFolders && setFolders(subFolders.folders);
+      subFolders && setFolders(subFolders.folders.sort(sort));
     } catch (error) {
       console.warn("Error fetching Sub-folders: ", error);
     }
@@ -36,7 +37,7 @@ const SidebarFolder = ({ folder }) => {
       />
       {showSubFolders && (
         <div className="ml-4">
-          {folders.map(subFolder => (
+          {folders.map((subFolder) => (
             <SidebarFolder key={subFolder._id} folder={subFolder} />
           ))}
         </div>

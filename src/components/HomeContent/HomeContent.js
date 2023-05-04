@@ -96,19 +96,6 @@ const HomeContent = () => {
           bookmarks={sidebar.rootBookmarks}
         />
       </div>
-      <div
-        className="flex h-full flex-1 flex-col flex-wrap overflow-x-auto p-3"
-        // className="flex-1 p-3 overflow-x-auto flex flex-wrap h-full"
-        // onDragOver={e => e.preventDefault()} // Required for drag and drop to function
-        // onDrop={e => handleDrop(e)}
-      >
-        {/* {sidebar.folders?.sort(sort).map((folder) => (
-          <Folder key={folder._id} folder={folder} />
-        ))}
-        {sidebar.bookmarks?.sort(sort).map((bookmark) => (
-          <Bookmark key={bookmark._id} bookmark={bookmark} />
-        ))} */}
-      </div>
       <Footer
         folderCount={sidebar.rootFolders?.length}
         bookmarkCount={sidebar.rootBookmarks?.length}
