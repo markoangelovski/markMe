@@ -1,6 +1,12 @@
 export const sort = (a, b) => {
-  const titleA = a?.title?.toLowerCase() || a.meta?.title?.toLowerCase();
-  const titleB = b?.title?.toLowerCase() || b.meta?.title?.toLowerCase();
+  const titleA =
+    a?.title?.toLowerCase() ||
+    a.meta?.title?.toLowerCase() ||
+    a.url.toLowerCase(); // For sorting root bookmarks with no title or meta
+  const titleB =
+    b?.title?.toLowerCase() ||
+    b.meta?.title?.toLowerCase() ||
+    b.url.toLowerCase(); // For sorting root bookmarks with no title or meta
 
   if (titleA < titleB) {
     return -1;

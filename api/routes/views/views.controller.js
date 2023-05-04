@@ -24,23 +24,27 @@ exports.getSidebarFolders = async (req, res, next) => {
     ] = await Promise.all([
       Folder.find({
         user: req.userId,
-        parentFolder: { $exists: false } // Find all folders and bookmarks without a parent folder property
+        parentFolder: { $exists: false } // Find all root folders
       }).select("-user -__v"),
       Bookmark.find({
         user: req.userId,
-        parentFolder: { $exists: false }
+        parentFolder: { $exists: false } // Find all root bookmarks
       }).select("-user -__v"),
       Folder.countDocuments({
+        // Count total number of folders
         user: req.userId
       }),
       Bookmark.countDocuments({
+        // Count total number of folders
         user: req.userId
       }),
       Folder.countDocuments({
+        // Count number of recent folders
         user: req.userId,
         createdAt: { $gt: new Date(sevenDaysAgo) }
       }),
       Bookmark.countDocuments({
+        // Count number of recent bookmarks
         user: req.userId,
         createdAt: { $gt: new Date(sevenDaysAgo) }
       }),
@@ -58,7 +62,7 @@ exports.getSidebarFolders = async (req, res, next) => {
           user: req.userId
         },
         null,
-        { limit: 10 } // Find 10 most recent folders
+        { limit: 10 } // Find 10 most recent bookmarks
       )
         .sort("-createdAt")
         .select("-user -__v"),
@@ -67,18 +71,18 @@ exports.getSidebarFolders = async (req, res, next) => {
           user: req.userId
         },
         null,
-        { limit: 10 } // Find 10 most recent folders
+        { limit: 10 } // Find 10 most visited folders sorted by the newest visited folder
       )
-        .sort("-hitCount")
+        .sort("-hitCount -updatedAt")
         .select("-user -__v"),
       Bookmark.find(
         {
           user: req.userId
         },
         null,
-        { limit: 10 } // Find 10 most recent folders
+        { limit: 10 } // Find 10 most visited bookmarks sorted by the newest visited bookmark
       )
-        .sort("-hitCount")
+        .sort("-hitCount -updatedAt")
         .select("-user -__v")
     ]);
 

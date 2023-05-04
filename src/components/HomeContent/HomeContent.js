@@ -40,25 +40,6 @@ const HomeContent = () => {
       </div>
       <div className="flex">
         <HomeItemsTable
-          title={"Recent folders"}
-          headings={[
-            "Title",
-            "Path",
-            "Sub-folders",
-            "Bookmarks",
-            "Created",
-            "Modified"
-          ]}
-          folders={sidebar.recentFolders}
-        />
-        <HomeItemsTable
-          title={"Recent bookmarks"}
-          headings={["Title", "Path", "Created", "Modified"]}
-          bookmarks={sidebar.recentBookmarks}
-        />
-      </div>
-      <div className="flex">
-        <HomeItemsTable
           title={"Popular folders"}
           headings={[
             "Title",
@@ -75,6 +56,25 @@ const HomeContent = () => {
           title={"Popular bookmarks"}
           headings={["Title", "Path", "Visits", "Created", "Modified"]}
           bookmarks={sidebar.popularBookmarks}
+        />
+      </div>
+      <div className="flex">
+        <HomeItemsTable
+          title={"Recent folders"}
+          headings={[
+            "Title",
+            "Path",
+            "Sub-folders",
+            "Bookmarks",
+            "Created",
+            "Modified"
+          ]}
+          folders={sidebar.recentFolders}
+        />
+        <HomeItemsTable
+          title={"Recent bookmarks"}
+          headings={["Title", "Path", "Created", "Modified"]}
+          bookmarks={sidebar.recentBookmarks}
         />
       </div>
       <div className="flex">

@@ -3,6 +3,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 
 import SidebarFolder from "../SidebarFolder/SidebarFolder.js";
 import SidebarBookmark from "../SidebarBookmark/SidebarBookmark.js";
+import { sort } from "../../helpers/helpers.js";
 
 const Sidebar = () => {
   const { sidebar } = useStoreState((state) => state);
@@ -19,7 +20,7 @@ const Sidebar = () => {
         Folders
       </h2>
       <div className="mt-3">
-        {sidebar?.rootFolders?.map((folder) => (
+        {sidebar?.rootFolders?.sort(sort).map((folder) => (
           <SidebarFolder key={folder._id} folder={folder} />
         ))}
       </div>
@@ -27,7 +28,7 @@ const Sidebar = () => {
         Bookmarks
       </h2>
       <div className="mt-3">
-        {sidebar?.rootBookmarks?.map((bookmark) => (
+        {sidebar?.rootBookmarks?.sort(sort).map((bookmark) => (
           <SidebarBookmark key={bookmark._id} bookmark={bookmark} />
         ))}
       </div>

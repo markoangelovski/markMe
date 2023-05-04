@@ -165,7 +165,49 @@ exports.bookmarkStats = (req, res, next) => {
 
     res.json({});
   } catch (error) {
-    console.warn("Delete bookmark error: ", error.message);
+    console.warn("Increase bookmark view count error: ", error.message);
+    next(error);
+  }
+};
+
+// desc: Endpoint used to add the correct "path" property to bookmarks. Left here just in case it is ever needed.
+exports.pathify = async (req, res, next) => {
+  try {
+    // Find bookmarks without parentFolderPath
+    const bkmrksWoPath = await Bookmark.find({
+      parentFolder: { $exists: true },
+      parentFolderPath: { $exists: false }
+    }).select("parentFolder");
+
+    console.log(
+      "Bookmarks without parent folder path fetched: ",
+      bkmrksWoPath.length
+    );
+
+    const folderIds = [];
+    bkmrksWoPath.forEach((bookmark) => {
+      folderIds.push(bookmark.parentFolder);
+    });
+
+    const folders = await Folder.find({ _id: folderIds }).select("path");
+
+    const bulkBookmark = Bookmark.collection.initializeUnorderedBulkOp();
+
+    bkmrksWoPath.forEach((bookmark) => {
+      const bookmarkFolder = folders.find(
+        (folder) => folder._id.toString() === bookmark.parentFolder.toString()
+      );
+
+      bulkBookmark
+        .find({ _id: bookmark._id })
+        .update({ $set: { parentFolderPath: bookmarkFolder.path } });
+    });
+
+    const result = bulkBookmark.execute();
+
+    res.json({ result });
+  } catch (error) {
+    console.warn("Error in bookmarks pathify: ", error.message);
     next(error);
   }
 };
