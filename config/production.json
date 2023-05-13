@@ -1,7 +1,7 @@
 {
-  "api": "https://markme.up.railway.app",
+  "api-legacy4": "https://markme.up.railway.app",
   "api-legacy3": "https://markme-prod-projects-fazagc.mo1.mogenius.io",
-  "api-legacy2": "https://markme-api.azurewebsites.net",
+  "api": "https://markme-api.azurewebsites.net",
   "api-legacy": "https://markme-api.herokuapp.com",
   "basePath": "/markMe",
   "origin": "https://markme.angelovski.top",
