@@ -4,7 +4,7 @@ import { Icon, IconForNew } from "../Icons/Icons";
 import { client } from "../../../config";
 
 const Bookmark = ({ bookmark }) => {
-  const isBookmarkNew = new Date(bookmark.createdAt) > sevenDaysAgo;
+  const isBookmarkNew = new Date(bookmark.createdAt) >= sevenDaysAgo;
 
   return (
     <div className="flex">

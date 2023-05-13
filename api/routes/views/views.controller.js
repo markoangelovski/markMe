@@ -41,12 +41,12 @@ exports.getSidebarFolders = async (req, res, next) => {
       Folder.countDocuments({
         // Count number of recent folders
         user: req.userId,
-        createdAt: { $gt: new Date(sevenDaysAgo) }
+        createdAt: { $gte: new Date(sevenDaysAgo) }
       }),
       Bookmark.countDocuments({
         // Count number of recent bookmarks
         user: req.userId,
-        createdAt: { $gt: new Date(sevenDaysAgo) }
+        createdAt: { $gte: new Date(sevenDaysAgo) }
       }),
       Folder.find(
         {
