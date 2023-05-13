@@ -4,8 +4,7 @@ echo "Running git add ."
 git add .
 
 echo "Running git commit..."
-echo "Enter commit description:"
-read description
+read description -p "Enter commit description:"
 
 echo "Pushing to Azure DevOps remote repository..."
 git commit -m "$description"
