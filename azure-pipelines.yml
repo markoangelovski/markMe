@@ -8,10 +8,10 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: "120ecadc-d339-4d10-b09c-feefc98693dc"
+  azureSubscription: "Azure Connection"
 
   # Web app name
-  webAppName: "MarkMe-API"
+  webAppName: "markme-api"
 
   # Environment name
   environmentName: "MarkMe-API"
